@@ -14,38 +14,38 @@ The fines and rewards will be tracked and at the end-of-sprint meeting ( general
 
 ## Wireframes
 
-##### Landing page
+#### Landing page
 
 ![](wire-frames/landing-page.png)
 
-##### Login and signup
+#### Login and signup
 
 ![](wire-frames/login-sign-up-page.png)
 
-##### Dashboard page
+#### Dashboard page
 
 ![](wire-frames/dashboard-page.png)
 
-##### User profile page
+#### User profile page
 
 ![](wire-frames/user-profile-page.png)
 
-##### Create league page 1
+#### Create league page 1
 
 ![](wire-frames/create-league-page-1.png)
 
-##### Create league page 2
+#### Create league page 2
 
 ![](wire-frames/create-league-page-2.png)
 
-##### Create league page 3
+#### Create league page 3
 
 ![](wire-frames/create-league-page-3.png)
 
-##### Create league page 4
+#### Create league page 4
 
 ![](wire-frames/create-league-page-4.png)
 
-##### Leage view page
+#### Leage view page
 
 ![](wire-frames/league-view-page.png)
