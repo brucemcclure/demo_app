@@ -23,13 +23,13 @@ The fines and rewards will be tracked and at the end-of-sprint meeting ( general
 
 The landing page is where the user will be directed to when they are not logged in. It should be attractive and represent what the app is about. It has the logo and a short welcome message on the card. The large image the card is on top of should be vibrant and colourful.
 
-![](wire-frames/landing-page.png)
+![](docs/wire-frames/landing-page.png)
 
 #### Login and signup
 
 When the user clicks enter, the card's contents changes to the login form. The user enters their credentials and is then directed to the dashboard page. If the user is not already a member of the app then they will sign up. Once again they will be directed to the dashboard page.
 
-![](wire-frames/login-sign-up-page.png)
+![](docs/wire-frames/login-sign-up-page.png)
 
 #### Dashboard page
 
@@ -42,7 +42,7 @@ This page is specific to each user. Its features are;
 - Logout button. This will delete the stored JWT
 - Edit profile button. This will link the user to the Edit Profile page.
 
-![](wire-frames/dashboard-page.png)
+![](docs/wire-frames/dashboard-page.png)
 
 #### User profile page
 
@@ -50,7 +50,7 @@ This page is where the user can change their username, password and profile pict
 
 - The user will be able to update and delete their profile
 
-![](wire-frames/user-profile-page.png)
+![](docs/wire-frames/user-profile-page.png)
 
 #### Create league page 1
 
@@ -60,19 +60,19 @@ The first part of the form is just The title of the league that will be created,
 
 The second part of the form is adding members. Once the members are added then emails are sent off to join the app. If they are already members of the app then a notification will be sent to them, when they accept they will be added to the league.
 
-![](wire-frames/create-league-page-1.png)
+![](docs/wire-frames/create-league-page-1.png)
 
 #### Create league page 2
 
 Part three of the form is choosing the _fines_ ie the behaviour the app is trying to correct. This should be light hearted in nature. We aren't trying to solve world hunger here. The user creating the league has the option of choosing a preset list of fines or making a custom list of fines ( Or choose a preset list of fines and adding a few custom fines to it ). There will be conditional rendering based on which button is clicked. This is demonstrated in the two screens shown side by side. Each fine has a numeric value associated with it. eg pushing code without tests will have a `-3` value.
 
-![](wire-frames/create-league-page-2.png)
+![](docs/wire-frames/create-league-page-2.png)
 
 #### Create league page 3
 
 This has the same functionality as the previous part of the form where _fines_ were defined for the league. The only difference is that this part is dedicated to _rewards_ . A user would be rewarded for something like presenting a teach back on a topic that they know something about.
 
-![](wire-frames/create-league-page-3.png)
+![](docs/wire-frames/create-league-page-3.png)
 
 #### Create league page 4
 
@@ -80,10 +80,10 @@ The final part of the wizard form is adding the deadlines for the sprints. These
 
 The meeting place queries Google Maps and displays the venue on the map on the desktop version of the app.
 
-![](wire-frames/create-league-page-4.png)
+![](docs/wire-frames/create-league-page-4.png)
 
 #### Leage view page
 
 The last page of v1.0 of the app is the league view page. This shows a table of the league and where everyone is ranked. It also shows how everyone did in previous sprints. Each row of the table is selectable and when selected it gives the user the opportunity to reward/fine that person. The Leave view page also shows when and where the next end-of-sprint meeting is and the user can register their attendance.
 
-![](wire-frames/league-view-page.png)
+![](docs/wire-frames/league-view-page.png)
