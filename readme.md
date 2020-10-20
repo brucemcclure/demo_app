@@ -113,3 +113,15 @@ The last page of v1.0 of the app is the league view page. This shows a table of 
 ![](docs/wire-frames/league-view-page.png)
 
 ---
+
+## WIP DB Schema
+
+1. A user can be a member of many leagues i.e. User has many leagues through members.
+2. A league has only 1 user. ie a league is owned by user.
+3. A league has many categories i.e. League has many categories though join.
+4. A category has many fines ( A fine can be regarded as a reward/fine ).
+5. This is an odd one
+6. A League has many sprints. A sprint is only associated with 1 league.
+7.
+
+![](docs/db/schema.png)
