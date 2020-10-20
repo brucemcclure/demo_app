@@ -9,7 +9,7 @@ on:
 
 jobs:
   test_suite:
-    runs_on: ubuntu-latest # The test_suite, runs on the latest ubuntu VM
+    runs-on: ubuntu-latest # The test_suite, runs on the latest ubuntu VM
     steps:
       - name: Checkout branch
         uses: actions/checkout@v2 # This loads up our repo into the VM. ie git clone into the VM.
