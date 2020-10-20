@@ -19,7 +19,7 @@ The fines and rewards will be tracked and at the end-of-sprint meeting ( general
 The app makes use of the venv pip package to create a virtual environment. Therefore the package will need to be installed in order to run the app. There after the install instructions are as below:
 
 - Clone the repo: `git clone https://github.com/brucemcclure/demo_app`
-  Change directory into the repo: `cd demo_app`
+- Change directory into the repo: `cd demo_app`
 - Make sure venv is installed: `pip install venv`
 - Create the virtual environment: `python3 -m venv venv`
 - Activate the virtual environment: `source venv/bin/activate`
