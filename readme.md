@@ -125,3 +125,9 @@ The last page of v1.0 of the app is the league view page. This shows a table of 
 7.
 
 ![](docs/db/schema.png)
+
+---
+
+## Swagger endpoints
+
+This is for oyu to workout for now. It can be pretty tricky Im not going to lie but I believe in you.
