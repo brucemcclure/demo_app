@@ -106,7 +106,7 @@ The meeting place queries Google Maps and displays the venue on the map on the d
 
 ![](docs/wire-frames/create-league-page-4.png)
 
-#### Leage view page
+#### League view page
 
 The last page of v1.0 of the app is the league view page. This shows a table of the league and where everyone is ranked. It also shows how everyone did in previous sprints. Each row of the table is selectable and when selected it gives the user the opportunity to reward/fine that person. The Leave view page also shows when and where the next end-of-sprint meeting is and the user can register their attendance.
 
@@ -130,4 +130,4 @@ The last page of v1.0 of the app is the league view page. This shows a table of 
 
 ## Swagger endpoints
 
-This is for oyu to workout for now. It can be pretty tricky Im not going to lie but I believe in you.
+This is for you to workout for now. It can be pretty tricky Im not going to lie but I believe in you.
