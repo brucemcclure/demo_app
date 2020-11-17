@@ -20,10 +20,23 @@ def auth_register():
 
 
     account.email = account_fields["email"]                                  # Add email to the account
-
     account.password = bcrypt.generate_password_hash(account_fields["password"]).decode("utf-8") # Hash the password and add it to the account
 
     db.session.add(account)                                                  # Add the account to rhe db session
     db.session.commit()                                                      # Commit the session
 
     return jsonify(account_schema.dump(account))                             # Return the account that was just created
+
+
+@auth.route("/login", methods=["POST"])
+def auth_login():
+    account_fields = account_schema.load(request.json)                                              #
+    account = Account.query.filter_by(email=account_fields["email"]).first()                        #
+
+    if not account or not bcrypt.check_password_hash(account.password, account_fields["password"]): #
+        return abort(401, description="Incorrect username or password")                             #
+
+    expiry = timedelta(days=1)                                                                      #
+    access_token = create_access_token(identity=str(account.id), expires_delta=expiry)              #
+
+    return jsonify({ "token": access_token })                                                       #
