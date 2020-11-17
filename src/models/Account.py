@@ -1,5 +1,5 @@
 from main import db                                                              # This is the db instance created by SQLAlchemy
-from models.User import User
+from models.Profile import Profile
 from sqlalchemy.orm import backref                                               # 
 
 class Account(db.Model):                                                        # Creating a Accounts class inheriting from db.Model
@@ -8,7 +8,7 @@ class Account(db.Model):                                                        
     id = db.Column(db.Integer, primary_key=True)                                 # There is an id column and it is the primary key
     email = db.Column(db.String(), nullable=False, unique=True)                  # Email column, string andit must be unique
     password = db.Column(db.String(), nullable=False)                            # The password is a string and must be present
-    user_id = db.relationship("User", backref=backref("account", uselist=False)) # 
+    user_id = db.relationship("Profile", backref=backref("account", uselist=False)) # 
 
     def __repr__(self):                                                          #
         return f"<Account {self.email}>"
