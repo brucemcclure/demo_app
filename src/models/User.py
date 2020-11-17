@@ -1,4 +1,4 @@
-from main import db                                                # This is the db instance created by SQLAlchemy
+from main import db                                            # This is the db instance created by SQLAlchemy
 
 class User(db.Model):                                              # Creating a User class inheriting from db.Model
     __tablename__ = "users"                                        # Explicitally providing the name of the table

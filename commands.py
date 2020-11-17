@@ -1,4 +1,4 @@
-from main import db                                             # This is the db instance created by SQLAlchemy
+from src.main import db                                             # This is the db instance created by SQLAlchemy
 from flask import Blueprint                                     # Use blueprints instead of passing the app object around 
 
 db_commands = Blueprint("bd-custom", __name__)                  # Creating the blueprint

@@ -35,3 +35,29 @@ class Config(object):
         if not value:
             raise ValueError("AWS_S3_BUCKET is not set")            # Raise error if it is not set
         return value
+
+class DevelopmentConfig(Config):                                    # Inherits from config
+    DEBUG = True                                                    # Adds in the debugging mode for development
+
+class ProductionConfig(Config):                                     # Inherits from config
+    @property
+    def JWT_SECRET_KEY(self):
+        value = os.environ.get("JWT_SECRET_KEY")                    # Use the production JWT secret
+        if not value:
+            raise ValueError("JWT Secret Key is not set")           # If no JWT then raise "JWT Secret Key is not set" error
+
+        return value                                                # Rrturn the JWT
+
+
+class TestingConfig(Config):                                        # Inherits from config
+    TESTING = True                                                  # Adds in the testing env-var
+
+
+environment = os.environ.get("FLASK_ENV")                           # Retrieve the the flask env variable
+
+if environment == "production":                                     # If the flask env variable is production
+    app_config = ProductionConfig()                                 # Then use the production config
+elif environment == "testing":                                      # If the flask env variable is testing
+    app_config = TestingConfig()                                    # Then use the testing config
+else:
+    app_config = DevelopmentConfig()                                # Else use the development config
