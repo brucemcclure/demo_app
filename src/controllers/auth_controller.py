@@ -30,13 +30,13 @@ def auth_register():
 
 @auth.route("/login", methods=["POST"])
 def auth_login():
-    account_fields = account_schema.load(request.json)                                              #
-    account = Account.query.filter_by(email=account_fields["email"]).first()                        #
+    account_fields = account_schema.load(request.json)                                              # Getting the fields from the Account Schema
+    account = Account.query.filter_by(email=account_fields["email"]).first()                        # Query the account table with the email and return the first account
 
-    if not account or not bcrypt.check_password_hash(account.password, account_fields["password"]): #
-        return abort(401, description="Incorrect username or password")                             #
+    if not account or not bcrypt.check_password_hash(account.password, account_fields["password"]): # If there is no account or the password is wrong
+        return abort(401, description="Incorrect username or password")                             # Return the error "Incorrect username or password"
 
-    expiry = timedelta(days=1)                                                                      #
-    access_token = create_access_token(identity=str(account.id), expires_delta=expiry)              #
+    expiry = timedelta(days=1)                                                                      # Time for the token to expire
+    access_token = create_access_token(identity=str(account.id), expires_delta=expiry)              # The access token, with the account id and the expiration date
 
-    return jsonify({ "token": access_token })                                                       #
+    return jsonify({ "token": access_token })                                                       # Return the token
