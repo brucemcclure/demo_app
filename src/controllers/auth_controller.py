@@ -13,6 +13,7 @@ def auth_register():
     user_fields = user_schema.load(request.json)                       # Getting the fields from the User Schema
     user = User.query.filter_by(email=user_fields["email"]).first()    # Query the user table with the email and return the first user
     
+    print("$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$")
     if user:                                                           # If a user is returned 
         return abort(400, description="Email already in use")          # Return the error "Email already in use"
 

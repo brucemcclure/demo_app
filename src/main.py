@@ -23,7 +23,7 @@ def create_app():
     ma.init_app(app)
     bcrypt.init_app(app)
     jwt.init_app(app)
-    migrate.init_app(app) 
+    migrate.init_app(app, db) 
 
     from commands import db_commands                        # Imports db_commands so they can be registered
     app.register_blueprint(db_commands)                     # Registering db_commands blueprint with app
