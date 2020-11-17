@@ -32,14 +32,14 @@ def seed_db():
     db.session.commit()                                                            # Commit the seeion to the db 
 
     for i in range(5):
-        profile = Profile()                                                        
+        profile = Profile()                                                        # Create a profile object from the Profile model                 
 
-        profile.username = faker.first_name()
-        profile.firstname = faker.first_name()
-        profile.lastname = faker.last_name()
-        profile.account_id = accounts[i].id
+        profile.username = faker.first_name()                                      # Add a username to the profile object
+        profile.firstname = faker.first_name()                                     # Add a firstname to the profile object
+        profile.lastname = faker.last_name()                                       # Add a lastname to the profile object
+        profile.account_id = accounts[i].id                                        # Add a account_id to the profile object. This comes from real ids from the accounts list
 
-        db.session.add(profile)
+        db.session.add(profile)                                                    # Add the profile to the session
 
-    db.session.commit()
-    print("Tables seeded")
+    db.session.commit()                                                            # Commit the session to the database
+    print("Tables seeded")                                                         # Print a message to let the user know they 
