@@ -41,4 +41,4 @@ def create_app():
         app.logger.error(error)
         return ("Server error: AKA bad stuff", 500)
 
-    return app
+    return app                                              # Return the app object
