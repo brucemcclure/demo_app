@@ -1,7 +1,7 @@
-from models.User import User                                       # Importing the User Model
-from schemas.UserSchema import user_schema                         # Importing the USer Schema
-from main import db                                                # This is the db instance created by SQLAlchemy
-from main import bcrypt                                            # Import the hasing package from main
+from models.User import User                                           # Importing the User Model
+from schemas.UserSchema import user_schema                             # Importing the USer Schema
+from main import db                                                    # This is the db instance created by SQLAlchemy
+from main import bcrypt                                                # Import the hasing package from main
 from flask_jwt_extended import create_access_token                     # Package for providing JWTs
 from datetime import timedelta                                         # Function to calculate the difference in time
 from flask import Blueprint, request, jsonify, abort                   # Import flask and various sub packages
@@ -28,4 +28,4 @@ def auth_register():
     db.session.add(user)                                               # Add the user to rhe db session
     db.session.commit()                                                # Commit the session
 
-    return jsonify(user_schema.dump(user)                              # Return the user that was just created
+    return jsonify(user_schema.dump(user))                             # Return the user that was just created

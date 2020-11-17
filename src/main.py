@@ -18,7 +18,7 @@ def create_app():
 
     app = Flask(__name__)                                   # Creating an instnace of Flask named app
     app.config.from_object('default_settings.app_config')   # Loads the configuration for the app object from default_settings.py
-                                                                
+
     db.init_app(app)                                        # This is gives these packages context to the correct 'app' object
     ma.init_app(app)
     bcrypt.init_app(app)
