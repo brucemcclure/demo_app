@@ -6,4 +6,3 @@ from flask_jwt_extended import create_access_token                     # Package
 from datetime import timedelta                                         # Function to calculate the difference in time
 from flask import Blueprint, request, jsonify, abort                   # Import flask and various sub packages
 
-# TODO
