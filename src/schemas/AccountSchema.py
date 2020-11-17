@@ -5,9 +5,10 @@ from marshmallow.validate import Length                                   # Impo
 class AccountSchema(ma.SQLAlchemyAutoSchema):                             # Generates Schema automatically
     class Meta:
         model = Account                                                   # Generate Schema using the Account Model
+        load_only = ["password"]
 
     email = ma.String(required=True, validate=Length(min=4))              # The email is required and must be at least 6 chars long
-    password = ma.String(required=True, validate=Length(min=6))           # This must be moved 
+    password = ma.String(required=True, validate=Length(min=6))           # 
 
 
 account_schema = AccountSchema()                                          # Schema for single accounts
