@@ -9,8 +9,7 @@ def drop_db():
     db.engine.execute("DROP TABLE IF EXISTS alembic_version;")  # Drop table for migrations
     print("Tables deleted")                                     # Print message to indicate tables are dropped
 
-faker = Faker()
-accounts = []
+
 
 @db_commands.cli.command("seed")                                # this fronction will run when "flask db-custom seed" is run"
 def seed_db():
@@ -20,13 +19,27 @@ def seed_db():
     from faker import Faker                                     # Importing the faker module for fake data
     import random                                               # Importing random from the python standard library
 
+    faker = Faker()
+    accounts = []
+
     for i in range(5):                                                             # Do this 5 times
         account = Account()                                                        # Create an account object from the Account model
-        account.email = f"test{i}@test.com"                                        # Assign an email to the account object
-        user.password = bcrypt.generate_password_hash("123456").decode("utf-8")    # Assign ta hashed password to the account object
+        account.email = f"test{i+1}@test.com"                                      # Assign an email to the account object
+        account.password = bcrypt.generate_password_hash("123456").decode("utf-8") # Assign ta hashed password to the account object
         db.session.add(account)                                                    # Add the account to the db session
         accounts.append(account)                                                   # Append the account to the accounts list
 
+    db.session.commit()                                                            # Commit the seeion to the db 
+
+    for i in range(5):
+        profile = Profile()                                                        
+
+        profile.username = faker.first_name()
+        profile.firstname = faker.first_name()
+        profile.lastname = faker.last_name()
+        profile.account_id = accounts[i].id
+
+        db.session.add(profile)
+
     db.session.commit()
-
-
+    print("Tables seeded")
