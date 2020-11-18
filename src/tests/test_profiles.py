@@ -6,3 +6,13 @@ from models.Profile import Profile                                         # The
 
 
 
+class TestProfiles(unittest.TestCase):                                      # This is the Parent class that will test our Profile functionality.    
+        @classmethod
+        def setUp(cls):
+            cls.app = create_app()                                          # Create a new instance of app
+            cls.app_context = cls.app.get_app_context()                     # Creating context for which the app is in. The tests run in parrallel therefore we need to keep track of which instance of app we are using
+            cls.app_context.push()                                          # Pushing context. Read the docs for more
+            cls.client = cls.app.test_client()                              # Adding the test client to the client
+            db.create_all()                                                 # Create all the 
+            runner = cls.app.test_cli_runner()
+            runner.invoke(args=["db", "seed"])                              # This seeds the db
