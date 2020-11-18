@@ -20,3 +20,20 @@ flask db-custom seed seeds the database
 | flask db upgrade          | resets the database with the most recent migrations |
 | flask db-custom seed      | seeds the database                                  |
 | flask db-custom downgrade | rolls back the database                             |
+
+This project contains the following packages
+NB This does not include their dependencies. Please see the requirements.txt
+
+| package                | Use  |
+| ---------------------- | ---- |
+| bcrypt                 | xxxx |
+| boto3                  | xxxx |
+| Flask                  | xxxx |
+| Flask-JWT-Extended     | xxxx |
+| flask-marshmallow      | xxxx |
+| Flask-Migrate          | xxxx |
+| Flask-SQLAlchemy       | xxxx |
+| marshmallow            | xxxx |
+| marshmallow-sqlalchemy | xxxx |
+| psycopg2-binary        | xxxx |
+| SQLAlchemy             | xxxx |
