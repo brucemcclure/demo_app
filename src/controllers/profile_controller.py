@@ -16,8 +16,8 @@ def profile_index():                                                   # This fu
     return jsonify(profiles_schema.dump(profiles))                     # Returning all the profiles in json
 
 @profiles.route("/", methods=["POST"])                                 # Route for the profile create
-@jwt_required
-@verify_account
+@jwt_required                                                          # JWT token is required for this route
+@verify_account                                                        # Auth service to make sure the correct account owns this profile
 def profile_create(account):                                           # This function will run when the route is matched
     if account.profile != None:                                        # If the account already has a profile
         return abort(400, description="User already has profile")      # Return the error "Email already in use"
@@ -39,19 +39,18 @@ def profile_create(account):                                           # This fu
     return jsonify(profile_schema.dump(new_profile))                   # Return the newly created profile
 
     
-@profiles.route("/<int:id>", methods=["PUT", "PATCH"])
-@jwt_required
-@verify_account
-def profile_update(accout, id):
+@profiles.route("/<int:id>", methods=["PUT", "PATCH"])                 # Route for the profile create
+@jwt_required                                                          # JWT token is required for this route
+@verify_account                                                        # Auth service to make sure the correct account owns this profile
+def profile_update(accout, id):                             
     
-    profile_fields = profile_schema.load(request.json)
+    profile_fields = profile_schema.load(request.json)                 # Retrieving the fields from the request
+    profile = Profile.query.filter_by(id=id, account_id=accout.id)     # Query the account table with the id and the account id then return the first account
 
-    profile = Profile.query.filter_by(id=id, account_id=accout.id)
+    if profile.count() !=1:                                            # If there is any number other than 1
+        return abort(401, description="Unauthorized to update this profile")  # Return this error
 
-    if profile.count() !=1:
-        return abort(401, description="Unauthorized to update this profile")
-
-    profile.update(profile_fields)
-    db.session.commit()
-    return jsonify(profile_schema.dump(profile[0]))
+    profile.update(profile_fields)                                     # Update the fields with the data from the request
+    db.session.commit()                                                # Commit the session to the db
+    return jsonify(profile_schema.dump(profile[0]))                    # Return the recently committed profile
 
