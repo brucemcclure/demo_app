@@ -13,3 +13,10 @@ alter user app with encrypted password 'a pretty good password';
 flask db-custom drop drops the database
 flask db upgrade resets the database with the most recent migrations
 flask db-custom seed seeds the database
+
+| Command                   | Effect                                              |
+| ------------------------- | --------------------------------------------------- |
+| flask db-custom drop      | drops the database                                  |
+| flask db upgrade          | resets the database with the most recent migrations |
+| flask db-custom seed      | seeds the database                                  |
+| flask db-custom downgrade | rolls back the database                             |
