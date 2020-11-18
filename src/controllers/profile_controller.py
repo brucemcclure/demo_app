@@ -65,7 +65,7 @@ def profile_update(account, id):
 @jwt_required        
 @verify_account                                                        # Auth service to make sure the correct account owns this profile
 def profile_delete(account, id):
-    profile = Profile.query.filter_by(id=id, account_id=account.id).first()     # Query the account table with the id and the account id then return the first account
+    profile = Profile.query.filter_by(id=id, account_id=account.id).first()  # Query the account table with the id and the account id then return the first account
     # print(profile[0].__dict__)
     # return("bills")
     if not profile:                                                    # If there is any number other than 1
