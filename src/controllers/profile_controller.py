@@ -19,7 +19,8 @@ def profile_index():                                                   # This fu
 @jwt_required                                                          # JWT token is required for this route
 @verify_account                                                        # Auth service to make sure the correct account owns this profile
 def profile_create(account):                                           # This function will run when the route is matched
-    if account.profile != None:                                        # If the account already has a profile
+
+    if account.profile != []:                                          # If the account already has a profile
         return abort(400, description="User already has profile")      # Return the error "Email already in use"
 
     profile_fields = profile_schema.load(request.json)                 # Retrieving the fields from the request
@@ -69,7 +70,7 @@ def profile_delete(account, id):
     # return("bills")
     if not profile:                                                    # If there is any number other than 1
         return abort(400, description="Unauthorized to update this profile") # Return this error
-
-    # db.session.delete(profile)
+    
+    db.session.delete(profile[0])
     db.session.commit()                                                # Commit the session to the db
     return jsonify(profile_schema.dump(profile))                       # Return the deleted profile
