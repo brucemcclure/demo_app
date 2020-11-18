@@ -38,7 +38,12 @@ def profile_create(account):                                           # This fu
       
     return jsonify(profile_schema.dump(new_profile))                   # Return the newly created profile
 
+@profiles.route("/<int:id>", methods=["GET"])                          
+def profile_show(id):                                                     
+    profile = Profile.query.get(id)                                       
+    return jsonify(profile_schema.dump(profile))                          
     
+
 @profiles.route("/<int:id>", methods=["PUT", "PATCH"])                 # Route for the profile create
 @jwt_required                                                          # JWT token is required for this route
 @verify_account                                                        # Auth service to make sure the correct account owns this profile
