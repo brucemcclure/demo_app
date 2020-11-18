@@ -19,23 +19,23 @@ def profile_index():                                                   # This fu
 @jwt_required
 @verify_account
 def profile_create(account):                                           # This function will run when the route is matched
-    profile_fields = profile_schema.load(request.json)
+    if account.profile != None:                                        # If the account already has a profile
+        return abort(400, description="User already has profile")      # Return the error "Email already in use"
 
+    profile_fields = profile_schema.load(request.json)
     profile = Profile.query.filter_by(username=profile_fields["username"]).first() # Query the account table with the email and return the first account
 
-    if account.profile != None:
-        return abort(400, description="User already has profile")             # Return the error "Email already in use"
+    if profile:                                                        # If a account is returned 
+        return abort(400, description="username already in use")       # Return the error "Email already in use"
+
+    new_profile = Profile()                                            # Create a new profile object from the Profile model 
+    new_profile.username = profile_fields["username"]                  # Add username to the new_profile 
+    new_profile.firstname = profile_fields["firstname"]                # Add username to the new_profile 
+    new_profile.lastname = profile_fields["lastname"]                  # Add username to the new_profile 
+    new_profile.account_id = account.id                                # Add username to the new_profile 
+    account.profile.append(new_profile)                                # Add profile to the account
+    db.session.commit()                                                # Commit the DB session
+      
+    return jsonify(profile_schema.dump(new_profile))                   # Return the newly created profile
 
     
-    if profile:                                                              # If a account is returned 
-        return abort(400, description="username already in use")             # Return the error "Email already in use"
-
-    new_profile = Profile()
-    new_profile.username = profile_fields["username"]
-    new_profile.firstname = profile_fields["firstname"]
-    new_profile.lastname = profile_fields["lastname"]
-    new_profile.account_id = account.id
-    account.profile.append(new_profile)
-    db.session.commit() 
-      
-    return jsonify(profile_schema.dump(new_profile))
