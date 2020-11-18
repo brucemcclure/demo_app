@@ -29,11 +29,11 @@ NB This does not include their dependencies. Please see the requirements.txt
 | bcrypt                 | Good password hashing for your software and your servers |
 | boto3                  | AWS python SDK                                           |
 | Flask                  | Python Micro Framework                                   |
-| Flask-JWT-Extended     | xxxx                                                     |
-| flask-marshmallow      | xxxx                                                     |
+| Flask-JWT-Extended     | Support for managing JWTs with flask                     |
+| flask-marshmallow      | Integration layer for Flaks and Marshmallow              |
+| marshmallow            | used to convert complex datatypes ,to and from Python    |
 | Flask-Migrate          | xxxx                                                     |
 | Flask-SQLAlchemy       | xxxx                                                     |
-| marshmallow            | xxxx                                                     |
 | marshmallow-sqlalchemy | xxxx                                                     |
 | psycopg2-binary        | xxxx                                                     |
 | SQLAlchemy             | xxxx                                                     |
