@@ -47,10 +47,10 @@ def profile_show(id):                                                  # Auth se
 @profiles.route("/<int:id>", methods=["PUT", "PATCH"])                 # Route for the profile create
 @jwt_required                                                          # JWT token is required for this route
 @verify_account                                                        # Auth service to make sure the correct account owns this profile
-def profile_update(accout, id):                             
+def profile_update(account, id):                             
     
     profile_fields = profile_schema.load(request.json)                 # Retrieving the fields from the request
-    profile = Profile.query.filter_by(id=id, account_id=accout.id)     # Query the account table with the id and the account id then return the first account
+    profile = Profile.query.filter_by(id=id, account_id=account.id)     # Query the account table with the id and the account id then return the first account
 
     if profile.count() !=1:                                            # If there is any number other than 1
         return abort(401, description="Unauthorized to update this profile")  # Return this error
@@ -59,3 +59,17 @@ def profile_update(accout, id):
     db.session.commit()                                                # Commit the session to the db
     return jsonify(profile_schema.dump(profile[0]))                    # Return the recently committed profile
 
+
+@profiles.route("/<int:id>", methods=["DELETE"])                       # Route for the profile create
+@jwt_required        
+@verify_account                                                        # Auth service to make sure the correct account owns this profile
+def profile_delete(account, id):
+    profile = Profile.query.filter_by(id=id, account_id=account.id)     # Query the account table with the id and the account id then return the first account
+    # print(profile[0].__dict__)
+    # return("bills")
+    if not profile:                                                    # If there is any number other than 1
+        return abort(400, description="Unauthorized to update this profile") # Return this error
+
+    # db.session.delete(profile)
+    db.session.commit()                                                # Commit the session to the db
+    return jsonify(profile_schema.dump(profile))                       # Return the deleted profile
