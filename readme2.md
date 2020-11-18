@@ -32,8 +32,10 @@ NB This does not include their dependencies. Please see the requirements.txt
 | bcrypt                 | Good password hashing for your software and your servers |
 | SQLAlchemy             | ORM                                                      |
 | boto3                  | AWS python SDK                                           |
-| marshmallow            | used to convert complex datatypes ,to and from Python    |
+| marshmallow            | used to convert complex datatypes to and from Python     |
 | Flask-Migrate          | SQLAlchemy DB migrations for Flask apps using Alembic    |
 | Flask-SQLAlchemy       | Adds support for SWLAlchemy for your flask app           |
 | marshmallow-sqlalchemy | Integration for SQLAlchemy and marshmallow               |
 | psycopg2-binary        | Postgres adapter for Python                              |
+
+`python -m unittest discover -s tests -v`
