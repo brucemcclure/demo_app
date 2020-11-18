@@ -26,14 +26,14 @@ NB This does not include their dependencies. Please see the requirements.txt
 
 | package                | Use                                                      |
 | ---------------------- | -------------------------------------------------------- |
-| bcrypt                 | Good password hashing for your software and your servers |
-| boto3                  | AWS python SDK                                           |
 | Flask                  | Python Micro Framework                                   |
-| Flask-JWT-Extended     | Support for managing JWTs with flask                     |
 | flask-marshmallow      | Integration layer for Flaks and Marshmallow              |
+| Flask-JWT-Extended     | Support for managing JWTs with flask                     |
+| bcrypt                 | Good password hashing for your software and your servers |
+| SQLAlchemy             | ORM                                                      |
+| boto3                  | AWS python SDK                                           |
 | marshmallow            | used to convert complex datatypes ,to and from Python    |
-| Flask-Migrate          | xxxx                                                     |
-| Flask-SQLAlchemy       | xxxx                                                     |
-| marshmallow-sqlalchemy | xxxx                                                     |
-| psycopg2-binary        | xxxx                                                     |
-| SQLAlchemy             | xxxx                                                     |
+| Flask-Migrate          | SQLAlchemy DB migrations for Flask apps using Alembic    |
+| Flask-SQLAlchemy       | Adds support for SWLAlchemy for your flask app           |
+| marshmallow-sqlalchemy | Integration for SQLAlchemy and marshmallow               |
+| psycopg2-binary        | Postgres adapter for Python                              |
