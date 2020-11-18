@@ -24,16 +24,16 @@ flask db-custom seed seeds the database
 This project contains the following pip packages
 NB This does not include their dependencies. Please see the requirements.txt
 
-| package                | Use  |
-| ---------------------- | ---- |
-| bcrypt                 | xxxx |
-| boto3                  | xxxx |
-| Flask                  | xxxx |
-| Flask-JWT-Extended     | xxxx |
-| flask-marshmallow      | xxxx |
-| Flask-Migrate          | xxxx |
-| Flask-SQLAlchemy       | xxxx |
-| marshmallow            | xxxx |
-| marshmallow-sqlalchemy | xxxx |
-| psycopg2-binary        | xxxx |
-| SQLAlchemy             | xxxx |
+| package                | Use                                                      |
+| ---------------------- | -------------------------------------------------------- |
+| bcrypt                 | Good password hashing for your software and your servers |
+| boto3                  | AWS python SDK                                           |
+| Flask                  | Python Micro Framework                                   |
+| Flask-JWT-Extended     | xxxx                                                     |
+| flask-marshmallow      | xxxx                                                     |
+| Flask-Migrate          | xxxx                                                     |
+| Flask-SQLAlchemy       | xxxx                                                     |
+| marshmallow            | xxxx                                                     |
+| marshmallow-sqlalchemy | xxxx                                                     |
+| psycopg2-binary        | xxxx                                                     |
+| SQLAlchemy             | xxxx                                                     |
