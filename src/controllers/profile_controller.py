@@ -51,11 +51,10 @@ def profile_show(id):                                                  # Auth se
 def profile_update(account, id):                             
     
     profile_fields = profile_schema.load(request.json)                 # Retrieving the fields from the request
-    profile = Profile.query.filter_by(id=id, account_id=account.id) # Query the account table with the id and the account id then return the first account
-
-
-    if profile.count() !=1:                                            # If there is any number other than 1
+    profile = Profile.query.filter_by(id=id, account_id=account.id)    # Query the account table with the id and the account id then return the first account
+    if not profile:                                                    # If there is no profile found
         return abort(401, description="Unauthorized to update this profile")  # Return this error
+
     print(profile.__dict__)
     profile.update(profile_fields)                                     # Update the fields with the data from the request
     db.session.commit()                                                # Commit the session to the db
