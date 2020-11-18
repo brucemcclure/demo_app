@@ -21,7 +21,7 @@ flask db-custom seed seeds the database
 | flask db-custom seed      | seeds the database                                  |
 | flask db-custom downgrade | rolls back the database                             |
 
-This project contains the following packages
+This project contains the following pip packages
 NB This does not include their dependencies. Please see the requirements.txt
 
 | package                | Use  |
