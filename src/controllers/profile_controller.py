@@ -51,11 +51,12 @@ def profile_show(id):                                                  # Auth se
 def profile_update(account, id):                             
     
     profile_fields = profile_schema.load(request.json)                 # Retrieving the fields from the request
-    profile = Profile.query.filter_by(id=id, account_id=account.id)     # Query the account table with the id and the account id then return the first account
+    profile = Profile.query.filter_by(id=id, account_id=account.id) # Query the account table with the id and the account id then return the first account
+
 
     if profile.count() !=1:                                            # If there is any number other than 1
         return abort(401, description="Unauthorized to update this profile")  # Return this error
-
+    print(profile.__dict__)
     profile.update(profile_fields)                                     # Update the fields with the data from the request
     db.session.commit()                                                # Commit the session to the db
     return jsonify(profile_schema.dump(profile[0]))                    # Return the recently committed profile
@@ -65,12 +66,12 @@ def profile_update(account, id):
 @jwt_required        
 @verify_account                                                        # Auth service to make sure the correct account owns this profile
 def profile_delete(account, id):
-    profile = Profile.query.filter_by(id=id, account_id=account.id)     # Query the account table with the id and the account id then return the first account
+    profile = Profile.query.filter_by(id=id, account_id=account.id).first()     # Query the account table with the id and the account id then return the first account
     # print(profile[0].__dict__)
     # return("bills")
     if not profile:                                                    # If there is any number other than 1
         return abort(400, description="Unauthorized to update this profile") # Return this error
     
-    db.session.delete(profile[0])
+    db.session.delete(profile)
     db.session.commit()                                                # Commit the session to the db
     return jsonify(profile_schema.dump(profile))                       # Return the deleted profile
