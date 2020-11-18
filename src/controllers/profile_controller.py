@@ -22,7 +22,7 @@ def profile_create(account):                                           # This fu
     if account.profile != None:                                        # If the account already has a profile
         return abort(400, description="User already has profile")      # Return the error "Email already in use"
 
-    profile_fields = profile_schema.load(request.json)
+    profile_fields = profile_schema.load(request.json)                 # Retrieving the fields from the request
     profile = Profile.query.filter_by(username=profile_fields["username"]).first() # Query the account table with the email and return the first account
 
     if profile:                                                        # If a account is returned 
@@ -39,3 +39,19 @@ def profile_create(account):                                           # This fu
     return jsonify(profile_schema.dump(new_profile))                   # Return the newly created profile
 
     
+@profiles.route("/<int:id>", methods=["PUT", "PATCH"])
+@jwt_required
+@verify_account
+def profile_update(accout, id):
+    
+    profile_fields = profile_schema.load(request.json)
+
+    profile = Profile.query.filter_by(id=id, account_id=accout.id)
+
+    if profile.count() !=1:
+        return abort(401, description="Unauthorized to update this profile")
+
+    profile.update(profile_fields)
+    db.session.commit()
+    return jsonify(profile_schema.dump(profile[0]))
+
