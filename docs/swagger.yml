@@ -71,12 +71,47 @@ paths:
           description: Email already in use
 
 
-
   /profile/:
-    post:
+    get:
       tags: 
       - "Profile"
-      summary: "Login to recieve a JWT token"
+      summary: "Index page for all the profiles"
       responses:
         '200':
           description: OK
+
+    post:
+      tags: 
+      - "Profile"
+      summary: "Create a new profile"
+      responses:
+        '200':
+          description: OK
+
+  /profile/{profileId}:
+    get:
+      tags: 
+      - "Profile"
+      summary: "Find profile by ID"
+      responses:
+        '200':
+          description: OK
+
+    patch:
+      tags: 
+      - "Profile"
+      summary: "Update profile by ID"
+      responses:
+        '200':
+          description: OK
+
+    delete:
+      tags: 
+      - "Profile"
+      summary: "Delete profile by ID"
+      responses:
+        '200':
+          description: OK
+
+
+          
