@@ -9,12 +9,14 @@ tags:
   description: "Regitering new users and logging in"
 - name: "Profile"
   description: "Personal information such as the users real name"
+
 paths:
   /auth/login:
     post:
       tags: 
       - "Authorization"
       summary: "Login to recieve a JWT token"
+
       parameters:
         - name: "email"
           description: "The email address used to sign up"
@@ -26,6 +28,7 @@ paths:
           schema:
             type: string           
           required: true          
+
       responses:
         '200':
           description: OK
@@ -34,9 +37,16 @@ paths:
             application/json:
               schema:
                 type: string
+        
+        '400': 
+          description: Incorrect username or password
+          headers:
+          content:
+            application/json:
+              schema:
+                type: string
 
         
-  
   /auth/register:
     post:
       tags: 
@@ -45,10 +55,28 @@ paths:
       parameters:
         - name: "email"
           description: "The email address used to sign up"
+          schema:
+            type: string        
           required: true
+        - name: "password"
+          description: "The password the user used to register"
+          schema:
+            type: string           
+          required: true          
           
       responses:
         '200':
           description: OK
+        '400':
+          description: Email already in use
 
 
+
+  /profile/:
+    post:
+      tags: 
+      - "Profile"
+      summary: "Login to recieve a JWT token"
+      responses:
+        '200':
+          description: OK
