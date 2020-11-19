@@ -38,4 +38,4 @@ NB This does not include their dependencies. Please see the requirements.txt
 | marshmallow-sqlalchemy | Integration for SQLAlchemy and marshmallow               |
 | psycopg2-binary        | Postgres adapter for Python                              |
 
-`python -m unittest discover -s tests -v`
+`python -m unittest discover -s src/tests -v`

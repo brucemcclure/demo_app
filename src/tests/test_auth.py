@@ -18,3 +18,38 @@ class TestProfiles(unittest.TestCase):                                  # This i
         db.session.remove()                                             # Remove the session from the db
         db.drop_all()                                                   # Drop all tables
         cls.app_context.pop()                                           # Remove the context of the app
+
+
+    def test_register(self):
+        response = self.client.post("/auth/register", 
+        headers={'Content-Type': 'application/json'},
+        json = {              
+            "email": "test1@test.com",
+            "password": "123456"
+        })
+        data = response.get_json()                                        # jsonify the data
+        self.assertEqual(response.status_code, 200) 
+
+        response = self.client.post("/auth/login", 
+        headers={'Content-Type': 'application/json'},
+        json = {              
+            "email": "test1@test.com",
+            "password": "123456"
+        })
+        print(response.__dict__, "<-------")                         
+        data = response.get_json()                                        # jsonify the data
+        self.assertEqual(response.status_code, 200)                       # Checking if the response code is 200 you can make it a range 200-299 too
+        # self.assertIsInstance(data, list)                               # Checking the data type of the response code
+
+
+    # def test_auth_login(self):
+    #     response = self.client.post("/auth/login", 
+    #     headers={'Content-Type': 'application/json'},
+    #     json = {              
+    #         "email": "test1@test.com",
+    #         "password": "123456"
+    #     })
+    #     print(response.__dict__, "<-------")                         
+    #     data = response.get_json()                                        # jsonify the data
+    #     self.assertEqual(response.status_code, 200)                       # Checking if the response code is 200 you can make it a range 200-299 too
+    #     # self.assertIsInstance(data, list)                               # Checking the data type of the response code

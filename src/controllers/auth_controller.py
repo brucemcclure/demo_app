@@ -18,7 +18,6 @@ def auth_register():
 
     account = Account()                                                      # Re-init account as a new instance of the Account model
 
-
     account.email = account_fields["email"]                                  # Add email to the account
     account.password = bcrypt.generate_password_hash(account_fields["password"]).decode("utf-8") # Hash the password and add it to the account
 

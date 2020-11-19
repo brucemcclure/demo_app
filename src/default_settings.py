@@ -38,6 +38,13 @@ class Config(object):
 
 class DevelopmentConfig(Config):                                    # Inherits from config
     DEBUG = True                                                    # Adds in the debugging mode for development
+    @property
+    def SQLALCHEMY_DATABASE_URI(self):                              # This is a function that will be used for all envs
+        value = os.environ.get("DB_URI_TEST")                            # Retrieve the DB_URI from the .env file to connect to DB
+        if not value:
+            raise ValueError("SQLALCHEMY_DATABASE_URI_TEST is not set")  # Raise error if it is not set
+        return value    
+
 
 class ProductionConfig(Config):                                     # Inherits from config
     @property
