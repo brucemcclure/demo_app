@@ -14,6 +14,12 @@ paths:
     get:
       tags: 
       - "Authorization"
+      summary: "Login to recieve a JWT token"
+      parameters:
+        - name: "email"
+          description: "The email address used to sign up"
+          required: true
+          
       responses:
         '200':
           description: OK
