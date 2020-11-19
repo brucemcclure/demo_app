@@ -13,14 +13,14 @@ class TestProfiles(unittest.TestCase):                                  # This i
         runner = cls.app.test_cli_runner()
         runner.invoke(args=["db", "seed"])                              # This seeds the db
 
-    @classmethod                                                        # This method will run after each and every class
-    def tearDown(cls):                                                  # We want to delete all the data from the class tests
-        db.session.remove()                                             # Remove the session from the db
-        db.drop_all()                                                   # Drop all tables
-        cls.app_context.pop()                                           # Remove the context of the app
+    # @classmethod                                                        # This method will run after each and every class
+    # def tearDown(cls):                                                  # We want to delete all the data from the class tests
+    #     db.session.remove()                                             # Remove the session from the db
+    #     db.drop_all()                                                   # Drop all tables
+    #     cls.app_context.pop()                                           # Remove the context of the app
 
 
-    def test_register(self):
+    def test_autth_register(self):
         response = self.client.post("/auth/register", 
         headers={'Content-Type': 'application/json'},
         json = {              
@@ -51,5 +51,5 @@ class TestProfiles(unittest.TestCase):                                  # This i
     #     })
     #     print(response.__dict__, "<-------")                         
     #     data = response.get_json()                                        # jsonify the data
-    #     self.assertEqual(response.status_code, 200)                       # Checking if the response code is 200 you can make it a range 200-299 too
-    #     # self.assertIsInstance(data, list)                               # Checking the data type of the response code
+    #     self.assertEqual(response.status_code, 200)                        # Checking if the response code is 200 you can make it a range 200-299 too
+        # self.assertIsInstance(data, list)                               # Checking the data type of the response code
