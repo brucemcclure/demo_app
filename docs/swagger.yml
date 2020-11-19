@@ -1,145 +1,21 @@
-
-produces:
-  - application/json
+openapi: '3.0.2'
+info:
+  title: Sprint Cup
+  version: '1.0'
+servers:
+  - url: https://api.server.test/v1
+tags: 
+- name: "Authorization"
+  description: "Regitering new users and logging in"
+- name: "Profile"
+  description: "Personal information such as the users real name"
 paths:
-  /login:
-    post:
-      tags:
-        - login
-      summary: Logs a user into the system
-      description: User password should not be returned as a part of a user object
-      security: []
-      operationId: login
-      parameters:
-        - in: body
-          name: body
-          required: true
-          schema:
-            type: object
-            required:
-              - username
-              - password
-            properties:
-              username:
-                type: string
-              password:
-                type: string
-      responses:
-        '200':
-          description: Return token and user object
-          schema:
-            $ref: '#/definitions/Login'
-        '401':
-          description: Invalid username/password supplied
-  /logout:
-    post:
-      tags:
-        - logout
-      summary: Logs out a currently logged in user session
-      description: ''
-      operationId: logout
-      security: []
-      parameters: []
-      responses:
-        default:
-          description: successful operation
-  /books:
-    post:
-      tags:
-        - Books
-      summary: Create book
-      description: Creates a new book
-      operationId: createForm
-      parameters:
-        - in: body
-          name: body
-          description: New form object
-          required: true
-          schema:
-            $ref: '#/definitions/Form'
-      responses:
-        default:
-          description: successful operation
-          schema:
-            description: formId
-            type: integer
+  /auth/login:
     get:
-      tags:
-        - Books
-      summary: Get a list of all books
-      description: Returns all
-      operationId: getForms
+      tags: 
+      - "Authorization"
       responses:
         '200':
-          description: successful operation
-          schema:
-            type: array
-            items:
-              $ref: '#/definitions/Form'
-        '400':
-          description: Invalid data supplied
-  '/books/{bookId}':
-    get:
-      tags:
-        - Books
-      summary: Get book by book id
-      description: ''
-      operationId: getFormById
-      parameters:
-        - name: bookId
-          in: path
-          description: Unique id of a form
-          required: true
-          type: string
-      responses:
-        '200':
-          description: successful operation
-          schema:
-            $ref: '#/definitions/Form'
-        '400':
-          description: Invalid data supplied
-        '404':
-          description: User not found
-    put:
-      tags:
-        - Books
-      summary: Update book
-      description: ''
-      operationId: updateForm
-      parameters:
-        - name: formId
-          in: path
-          description: Unique id of a form
-          required: true
-          type: string
-        - in: body
-          name: body
-          description: Updated form object
-          required: true
-          schema:
-            $ref: '#/definitions/Form'
-      responses:
-        '400':
-          description: Invalid data supplied
-        '404':
-          description: Form not found
-    delete:
-      tags:
-        - Books
-      summary: Delete book
-      description: >-
-        If form status is draft or approval_requested, then Author, Approver,
-        Admin can delete.  Otherwise, can't delete
-      operationId: deleteForm
-      parameters:
-        - name: formId
-          in: path
-          description: Unique id of a form that needs to be deleted
-          required: true
-          type: string
-      responses:
-        '400':
-          description: Invalid data supplied
-        '404':
-          description: Form not found
-  '/forms/{formId}/questions/':
+          description: OK
+
+
