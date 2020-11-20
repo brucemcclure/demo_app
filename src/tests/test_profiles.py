@@ -32,7 +32,7 @@ class TestProfiles(unittest.TestCase):                                  # This i
 
     def test_profile_create(self):
         response = self.client.post("/auth/register",                   # make a post request to the app the "/auth/register" url, save it to a response object
-        json = {                                                        # Registering a new account
+        json = {                                                        # JSON data  for registering a new account
             "email": "test6@test.com",
             "password": "123456"
         })
@@ -60,29 +60,27 @@ class TestProfiles(unittest.TestCase):                                  # This i
         self.assertEqual(profile.username, "bruce")                     # Checking if the user name is the correct data
 
     def test_profile_update(self):
-        response = self.client.post("/auth/login", 
-        json = {              
+        response = self.client.post("/auth/login",                      # Sending a post request to '/profile/'
+        json = {                                                        # Data for login
             "email": "test5@test.com",
             "password": "123456"
         })                    
-        data = response.get_json()
-        headers_data= {
-            'Content-Type': 'application/json',
+        data = response.get_json()                                      # converting the response to data
+        headers_data= {                                                 # Building the dictionary for the auth header
             'Authorization': f"Bearer {data['token']}"
         }
-
-        profile_data = {
+        profile_data = {                                                # Building the dictionary for the new profile data            
 	        "username" : "this is an updated username", 
 	        "firstname" : "test", 
 	        "lastname" : "test"
         }
-        response = self.client.patch("/profile/5", 
-        json = profile_data, 
-        headers = headers_data)
-        data = response.get_json()
-        profile = Profile.query.get(data["id"])
-        self.assertEqual(profile.username, "this is an updated username")
-        self.assertEqual(response.status_code, 200)           
+        response = self.client.patch("/profile/5",                      # Sending a patch request to '/profile/5'
+        json = profile_data,                                            # Dictionary with new data
+        headers = headers_data)                                         # Dictionary with auth header
+        data = response.get_json()                                      # Converting response to JSON
+        profile = Profile.query.get(data["id"])                         # Retrieve the edited profile from the db
+        self.assertEqual(profile.username, "this is an updated username")   # Checking the username was infact updated
+        self.assertEqual(response.status_code, 200)                     # Checking the response is a 200
 
     def test_profile_show(self):
         response = self.client.get("/profile/1")
