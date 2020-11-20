@@ -83,7 +83,8 @@ class TestProfiles(unittest.TestCase):                                  # This i
         self.assertEqual(response.status_code, 200)                     # Checking the response is a 200
 
     def test_profile_show(self):
-        response = self.client.get("/profile/1")
-        data = response.get_json()
-        self.assertEqual(response.status_code, 200)   
-        self.assertEqual(data['account']['email'], "test1@test.com")
+        response = self.client.get("/profile/1")                        # Sending a get request to '/profile/1'
+        data = response.get_json()                                      # Converting the response to json  
+        self.assertEqual(response.status_code, 200)                     # Checking the status code is 200
+        self.assertEqual(data["id"], 1)                                 # Checking the id of the profile is correct 
+
