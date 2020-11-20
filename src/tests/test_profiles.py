@@ -74,14 +74,12 @@ class TestProfiles(unittest.TestCase):                                  # This i
         }
 
         profile_data = {
-	        "username" : "121212", 
+	        "username" : "this is an updated username", 
 	        "firstname" : "test", 
 	        "lastname" : "test"
         }
-
         response = self.client.patch("/profile/5", json = profile_data, headers = headers_data)
-
         data = response.get_json()
-
-        print(data, "<===========8")
-
+        profile = Profile.query.get(data["id"])
+        self.assertEqual(profile.username, "this is an updated username")
+        self.assertEqual(response.status_code, 200)           
