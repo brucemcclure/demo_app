@@ -5,8 +5,6 @@ from models.Account import Account                                         # The
 
 # NB The tests must run in isolation because we cant guarentee which tests run in which order.
 
-
-
 class TestProfiles(unittest.TestCase):                                  # This is the Parent class that will test our Profile functionality.    
     @classmethod
     def setUp(cls):                                                     # This method will run before each and every class

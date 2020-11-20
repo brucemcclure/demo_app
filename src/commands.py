@@ -13,14 +13,16 @@ def drop_db():
 
 @db_commands.cli.command("seed")                                # this fronction will run when "flask db-custom seed" is run"
 def seed_db():
-    from models.Account import Account                          # Importing the Account model
+    from models.Account import Account, account_leagues         # Importing the Account model
     from models.Profile import Profile                          # Importing the Profile model
+    from models.League import League
     from main import bcrypt                                     # Hashing module for the passwords
     from faker import Faker                                     # Importing the faker module for fake data
     import random                                               # Importing random from the python standard library
 
     faker = Faker()
     accounts = []
+    leagues = []
 
     for i in range(5):                                                             # Do this 5 times
         account = Account()                                                        # Create an account object from the Account model
@@ -42,4 +44,17 @@ def seed_db():
         db.session.add(profile)                                                    # Add the profile to the session
 
     db.session.commit()                                                            # Commit the session to the database
+
+    for i in range(3):
+        new_league = League()
+        new_league.title = f"League title {i}"
+        new_league.description = f"A nice league to the power of {i}"
+        for i in range(3):
+            new_league.account_leagues.append(accounts[i])
+            leagues.append(new_league)
+        db.session.commit() 
+
+    for member in leagues[0].account_leagues:
+        # print(f"League {i.title} => {i.account_id}") 
+        print(member.email)
     print("Tables seeded")                                                         # Print a message to let the user know they 
