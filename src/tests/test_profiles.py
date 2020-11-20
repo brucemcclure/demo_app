@@ -31,15 +31,12 @@ class TestProfiles(unittest.TestCase):                                  # This i
         self.assertIsInstance(data, list)                               # Checking the data type of the response code
 
     def test_profile_create(self):
-
-
         response = self.client.post("/auth/register", 
         headers={'Content-Type': 'application/json'},
         json = {              
             "email": "test6@test.com",
             "password": "123456"
         })
-        
         response = self.client.post("/auth/login", 
         headers={'Content-Type': 'application/json'},
         json = {              
@@ -47,7 +44,6 @@ class TestProfiles(unittest.TestCase):                                  # This i
             "password": "123456"
         })                    
         data = response.get_json()
-
         headers_data= {
             'Content-Type': 'application/json',
             'Authorization': f"Bearer {data['token']}"
@@ -57,7 +53,6 @@ class TestProfiles(unittest.TestCase):                                  # This i
             "firstname" : "test", 
             "lastname" : "test"
         }
-
         response = self.client.post("/profile/", json = data, headers = headers_data)
         self.assertEqual(response.status_code, 200) 
         data = response.get_json()
@@ -65,5 +60,28 @@ class TestProfiles(unittest.TestCase):                                  # This i
         self.assertIsNotNone(profile)
         self.assertEqual(profile.username, "bruce")
 
+    def test_profile_update(self):
+        response = self.client.post("/auth/login", 
+        headers={'Content-Type': 'application/json'},
+        json = {              
+            "email": "test5@test.com",
+            "password": "123456"
+        })                    
+        data = response.get_json()
+        headers_data= {
+            'Content-Type': 'application/json',
+            'Authorization': f"Bearer {data['token']}"
+        }
 
+        profile_data = {
+	        "username" : "121212", 
+	        "firstname" : "test", 
+	        "lastname" : "test"
+        }
+
+        response = self.client.patch("/profile/5", json = profile_data, headers = headers_data)
+
+        data = response.get_json()
+
+        print(data, "<===========8")
 
