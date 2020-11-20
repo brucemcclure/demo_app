@@ -34,6 +34,7 @@ def profile_create(account):                                           # This fu
     new_profile.firstname = profile_fields["firstname"]                # Add username to the new_profile 
     new_profile.lastname = profile_fields["lastname"]                  # Add username to the new_profile 
     new_profile.account_id = account.id                                # Add username to the new_profile 
+    
     account.profile.append(new_profile)                                # Add profile to the account
     db.session.commit()                                                # Commit the DB session
       

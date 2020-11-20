@@ -3,7 +3,7 @@ info:
   title: Sprint Cup
   version: '1.0'
 servers:
-  - url: https://api.server.test/v1
+  - url: "this is where the api url will be"
 tags: 
 - name: "Authorization"
   description: "Regitering new users and logging in"
@@ -141,4 +141,4 @@ paths:
           description: OK
 
 
-          
+  

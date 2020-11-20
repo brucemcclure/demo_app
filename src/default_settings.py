@@ -7,6 +7,13 @@ class Config(object):
 
     @property
     def SQLALCHEMY_DATABASE_URI(self):                              # This is a function that will be used for all envs
+        value = os.environ.get("DB_URI")                       # Retrieve the DB_URI from the .env file to connect to DB
+        if not value:
+            raise ValueError("SQLALCHEMY_DATABASE_URI is not set")  # Raise error if it is not set
+        return value    
+
+    @property
+    def SQLALCHEMY_DATABASE_URI(self):                              # This is a function that will be used for all envs
         value = os.environ.get("DB_URI")                            # Retrieve the DB_URI from the .env file to connect to DB
         if not value:
             raise ValueError("SQLALCHEMY_DATABASE_URI is not set")  # Raise error if it is not set
@@ -38,13 +45,7 @@ class Config(object):
 
 class DevelopmentConfig(Config):                                    # Inherits from config
     DEBUG = True                                                    # Adds in the debugging mode for development
-    @property
-    def SQLALCHEMY_DATABASE_URI(self):                              # This is a function that will be used for all envs
-        value = os.environ.get("DB_URI_TEST")                            # Retrieve the DB_URI from the .env file to connect to DB
-        if not value:
-            raise ValueError("SQLALCHEMY_DATABASE_URI_TEST is not set")  # Raise error if it is not set
-        return value    
-
+    
 
 class ProductionConfig(Config):                                     # Inherits from config
     @property
@@ -55,9 +56,14 @@ class ProductionConfig(Config):                                     # Inherits f
 
         return value                                                # Rrturn the JWT
 
-
 class TestingConfig(Config):                                        # Inherits from config
     TESTING = True                                                  # Adds in the testing env-var
+    @property
+    def SQLALCHEMY_DATABASE_URI(self):                              # This is a function that will be used for all envs
+        value = os.environ.get("DB_URI_TEST")                       # Retrieve the DB_URI from the .env file to connect to DB
+        if not value:
+            raise ValueError("SQLALCHEMY_DATABASE_URI_TEST is not set")  # Raise error if it is not set
+        return value    
 
 
 environment = os.environ.get("FLASK_ENV")                           # Retrieve the the flask env variable

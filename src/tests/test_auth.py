@@ -11,20 +11,20 @@ class TestProfiles(unittest.TestCase):                                  # This i
         cls.client = cls.app.test_client()                              # Adding the test client to the client
         db.create_all()                                                 # Create all the 
         runner = cls.app.test_cli_runner()
-        runner.invoke(args=["db", "seed"])                              # This seeds the db
+        runner.invoke(args=["db-custom", "seed"])                              # This seeds the db
 
-    # @classmethod                                                        # This method will run after each and every class
-    # def tearDown(cls):                                                  # We want to delete all the data from the class tests
-    #     db.session.remove()                                             # Remove the session from the db
-    #     db.drop_all()                                                   # Drop all tables
-    #     cls.app_context.pop()                                           # Remove the context of the app
+    @classmethod                                                        # This method will run after each and every class
+    def tearDown(cls):                                                  # We want to delete all the data from the class tests
+        db.session.remove()                                             # Remove the session from the db
+        db.drop_all()                                                   # Drop all tables
+        cls.app_context.pop()                                           # Remove the context of the app
 
 
-    def test_autth_register(self):
+    def test_auth_register(self):
         response = self.client.post("/auth/register", 
         headers={'Content-Type': 'application/json'},
         json = {              
-            "email": "test1@test.com",
+            "email": "test6@test.com",
             "password": "123456"
         })
         data = response.get_json()                                        # jsonify the data
@@ -33,23 +33,22 @@ class TestProfiles(unittest.TestCase):                                  # This i
         response = self.client.post("/auth/login", 
         headers={'Content-Type': 'application/json'},
         json = {              
-            "email": "test1@test.com",
+            "email": "test6@test.com",
             "password": "123456"
-        })
-        print(response.__dict__, "<-------")                         
+        })                    
         data = response.get_json()                                        # jsonify the data
         self.assertEqual(response.status_code, 200)                       # Checking if the response code is 200 you can make it a range 200-299 too
         # self.assertIsInstance(data, list)                               # Checking the data type of the response code
 
 
-    # def test_auth_login(self):
-    #     response = self.client.post("/auth/login", 
-    #     headers={'Content-Type': 'application/json'},
-    #     json = {              
-    #         "email": "test1@test.com",
-    #         "password": "123456"
-    #     })
-    #     print(response.__dict__, "<-------")                         
-    #     data = response.get_json()                                        # jsonify the data
-    #     self.assertEqual(response.status_code, 200)                        # Checking if the response code is 200 you can make it a range 200-299 too
-        # self.assertIsInstance(data, list)                               # Checking the data type of the response code
+    def test_auth_login(self):
+        response = self.client.post("/auth/login", 
+        headers={'Content-Type': 'application/json'},
+        json = {              
+            "email": "test1@test.com",
+            "password": "123456"
+        })
+        data = response.get_json()                                        # jsonify the data
+        # print(type(data['token']), "<-------- **********")
+        self.assertEqual(response.status_code, 200)                       # Checking if the response code is 200 you can make it a range 200-299 too
+        self.assertIsInstance(data['token'], str)                                 # Checking the data type of the response code
