@@ -53,7 +53,9 @@ class TestProfiles(unittest.TestCase):                                  # This i
             "firstname" : "test", 
             "lastname" : "test"
         }
-        response = self.client.post("/profile/", json = data, headers = headers_data)
+        response = self.client.post("/profile/", 
+        json = data, 
+        headers = headers_data)
         self.assertEqual(response.status_code, 200) 
         data = response.get_json()
         profile = Profile.query.get(data["account"]["id"])
@@ -78,8 +80,16 @@ class TestProfiles(unittest.TestCase):                                  # This i
 	        "firstname" : "test", 
 	        "lastname" : "test"
         }
-        response = self.client.patch("/profile/5", json = profile_data, headers = headers_data)
+        response = self.client.patch("/profile/5", 
+        json = profile_data, 
+        headers = headers_data)
         data = response.get_json()
         profile = Profile.query.get(data["id"])
         self.assertEqual(profile.username, "this is an updated username")
         self.assertEqual(response.status_code, 200)           
+
+    def test_profile_show(self):
+        response = self.client.get("/profile/1")
+        data = response.get_json()
+        self.assertEqual(response.status_code, 200)    
+        self.assertEqual(data['account']['email'], "test1@test.com")

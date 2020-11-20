@@ -41,7 +41,7 @@ def profile_create(account):                                           # This fu
     return jsonify(profile_schema.dump(new_profile))                   # Return the newly created profile
 
 @profiles.route("/<int:id>", methods=["GET"])                          # Route for the profile create
-def profile_show(id):                                                  # Auth service to make sure the correct account owns this profile
+def profile_show(id):                                         # Auth service to make sure the correct account owns this profile
     profile = Profile.query.get(id)                                    # Query the account table with the id then return that account
     return jsonify(profile_schema.dump(profile))                       # Returb the profile in JSON
     

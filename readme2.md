@@ -1,3 +1,7 @@
+TODO
+
+Must change the profile view to check JWT
+
 ### Commands to set up the db
 
 sudo -i -u postgres
