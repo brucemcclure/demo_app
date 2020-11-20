@@ -55,7 +55,7 @@ class TestProfiles(unittest.TestCase):                                  # This i
         headers = headers_data)                                         # Auth header
         self.assertEqual(response.status_code, 200)                     # Checking if the response is 200
         data = response.get_json()                                      # Converting the response to data
-        profile = Profile.query.get(data["account"]["id"])              # Querying the db for the profile
+        profile = Profile.query.get(data["user"]["id"])                 # Querying the db for the profile
         self.assertIsNotNone(profile)                                   # Checking the profile exists
         self.assertEqual(profile.username, "bruce")                     # Checking if the user name is the correct data
 
