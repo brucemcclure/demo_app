@@ -13,6 +13,7 @@ tags:
 paths:
   /auth/login:
     post:
+      operationId: "auth_login"
       tags: 
       - "Authorization"
       summary: "Login to recieve a JWT token"
@@ -49,6 +50,7 @@ paths:
         
   /auth/register:
     post:
+      operationId: "auth_register"
       tags: 
       - "Authorization"
       summary: "Register a new user"
@@ -73,6 +75,7 @@ paths:
 
   /profile/:
     get:
+      operationId: "profile_index"
       tags: 
       - "Profile"
       summary: "Index page for all the profiles"
@@ -90,24 +93,48 @@ paths:
 
   /profile/{profileId}:
     get:
+      operationId: "profile_show"
       tags: 
       - "Profile"
+      parameters:
+        - name: profileId
+          in: path
+          description: ID of profile to return
+          required: true
+          schema:
+            type: integer
       summary: "Find profile by ID"
       responses:
         '200':
           description: OK
-
+      
     patch:
+      operationId: "profile_update"
       tags: 
       - "Profile"
+      parameters:
+        - name: profileId
+          in: path
+          description: ID of profile to return
+          required: true
+          schema:
+            type: integer
       summary: "Update profile by ID"
       responses:
         '200':
           description: OK
 
     delete:
+      operationId: "profile_delete"
       tags: 
       - "Profile"
+      parameters:
+        - name: profileId
+          in: path
+          description: ID of profile to return
+          required: true
+          schema:
+            type: integer
       summary: "Delete profile by ID"
       responses:
         '200':
