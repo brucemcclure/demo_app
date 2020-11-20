@@ -25,14 +25,14 @@ class TestProfiles(unittest.TestCase):                                  # This i
         cls.app_context.pop()                                           # Remove the context of the app
 
     def test_profile_index(self):
-        response = self.client.get("/profile/")                         # make a get request to the app the "/books/" url, save it to a response object
+        response = self.client.get("/profile/")                         # make a get request to the app the "/profile/" url, save it to a response object
         data = response.get_json()                                      # jsonify the data
         self.assertEqual(response.status_code, 200)                     # Checking if the response code is 200 you can make it a range 200-299 too
         self.assertIsInstance(data, list)                               # Checking the data type of the response code
 
     def test_profile_create(self):
-        response = self.client.post("/auth/register", 
-        headers={'Content-Type': 'application/json'},
+        response = self.client.post("/auth/register",                   # make a get request to the app the "/profile/" url, save it to a response object
+        # headers={'Content-Type': 'application/json'},                   # 
         json = {              
             "email": "test6@test.com",
             "password": "123456"
