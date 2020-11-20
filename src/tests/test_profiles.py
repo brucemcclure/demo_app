@@ -1,7 +1,7 @@
 import unittest                                                            # This is the inbuilt python testing module
 from main import create_app, db                                            # This is the create_app function from the factory pattern and the DB from main
 from models.Profile import Profile                                         # The Profile module that is used to communicate data with the DB
-from models.Account import Account                                         # The Account module to be used to log in to retrieve a JWT
+from models.User import User                                               # The User module to be used to log in to retrieve a JWT
 
 # NB The tests must run in isolation because we cant guarentee which tests run in which order.
 
@@ -31,12 +31,12 @@ class TestProfiles(unittest.TestCase):                                  # This i
         self.assertIsInstance(data, list)                               # Checking the data type of the response code
 
     def test_profile_create(self):
-        response = self.client.post("/auth/register",                   # make a post request to the app the "/auth/register" url, save it to a response object
-        json = {                                                        # JSON data  for registering a new account
+        response = self.client.post("/user/register",                   # make a post request to the app the "/user/register" url, save it to a response object
+        json = {                                                        # JSON data  for registering a new user
             "email": "test6@test.com",
             "password": "123456"
         })
-        response = self.client.post("/auth/login",                      # Logging in with the new account credentials
+        response = self.client.post("/user/login",                      # Logging in with the new user credentials
         json = {              
             "email": "test6@test.com",
             "password": "123456"
@@ -60,7 +60,7 @@ class TestProfiles(unittest.TestCase):                                  # This i
         self.assertEqual(profile.username, "bruce")                     # Checking if the user name is the correct data
 
     def test_profile_update(self):
-        response = self.client.post("/auth/login",                      # Sending a post request to '/profile/'
+        response = self.client.post("/user/login",                      # Sending a post request to '/profile/'
         json = {                                                        # Data for login
             "email": "test5@test.com",
             "password": "123456"

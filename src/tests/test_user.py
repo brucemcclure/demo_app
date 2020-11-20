@@ -1,6 +1,6 @@
-import unittest                                                            # This is the inbuilt python testing module
-from main import create_app, db                                            # This is the create_app function from the factory pattern and the DB from main
-from models.Account import Account                                         # The Account module to be used to log in to retrieve a JWT
+import unittest                                                         # This is the inbuilt python testing module
+from main import create_app, db                                         # This is the create_app function from the factory pattern and the DB from main
+from models.User import User                                      # The User module to be used to log in to retrieve a JWT
 
 class TestProfiles(unittest.TestCase):                                  # This is the Parent class that will test our Profile functionality.    
     @classmethod
@@ -20,8 +20,8 @@ class TestProfiles(unittest.TestCase):                                  # This i
         cls.app_context.pop()                                           # Remove the context of the app
 
 
-    def test_auth_register(self):
-        response = self.client.post("/auth/register",                   # Sending a post request to /auth/register
+    def test_user_register(self):
+        response = self.client.post("/user/register",                   # Sending a post request to /user/register
         json = {                                                        # Data needed to register a new user
             "email": "test6@test.com",
             "password": "123456"
@@ -29,7 +29,7 @@ class TestProfiles(unittest.TestCase):                                  # This i
         self.assertEqual(response.status_code, 200)                     # Make sure the status codefrom the response is 200
         data = response.get_json()                                      # Convert the data to JSON
 
-        response = self.client.post("/auth/login",                      # Sending a post request to /auth/login
+        response = self.client.post("/user/login",                      # Sending a post request to /user/login
         json = {                                                        # The json data needed to login ( From the new user )
             "email": "test6@test.com",
             "password": "123456"
@@ -38,8 +38,8 @@ class TestProfiles(unittest.TestCase):                                  # This i
         self.assertEqual(response.status_code, 200)                     # Checking if the response code is 200 you can make it a range 200-299 too
 
 
-    def test_auth_login(self):
-        response = self.client.post("/auth/login",                       # Sending a post request to /auth/login
+    def test_user_login(self):
+        response = self.client.post("/user/login",                       # Sending a post request to /user/login
         json = {                                                         # The json data needed to login
             "email": "test1@test.com",
             "password": "123456"
