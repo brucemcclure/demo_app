@@ -31,40 +31,36 @@ class TestProfiles(unittest.TestCase):                                  # This i
         self.assertIsInstance(data, list)                               # Checking the data type of the response code
 
     def test_profile_create(self):
-        response = self.client.post("/auth/register",                   # make a get request to the app the "/profile/" url, save it to a response object
-        # headers={'Content-Type': 'application/json'},                   # 
-        json = {              
+        response = self.client.post("/auth/register",                   # make a post request to the app the "/auth/register" url, save it to a response object
+        json = {                                                        # Registering a new account
             "email": "test6@test.com",
             "password": "123456"
         })
-        response = self.client.post("/auth/login", 
-        headers={'Content-Type': 'application/json'},
+        response = self.client.post("/auth/login",                      # Logging in with the new account credentials
         json = {              
             "email": "test6@test.com",
             "password": "123456"
         })                    
-        data = response.get_json()
-        headers_data= {
-            'Content-Type': 'application/json',
+        data = response.get_json()                                      # Turning the response to JSON
+        headers_data= {                                                 # Creating the dictionary to be sent as an auth header 
             'Authorization': f"Bearer {data['token']}"
         }
-        data = {
+        data = {                                                        # Creating a dictionary holding the data for the new profile
             "username" : "bruce", 
             "firstname" : "test", 
             "lastname" : "test"
         }
-        response = self.client.post("/profile/", 
-        json = data, 
-        headers = headers_data)
-        self.assertEqual(response.status_code, 200) 
-        data = response.get_json()
-        profile = Profile.query.get(data["account"]["id"])
-        self.assertIsNotNone(profile)
-        self.assertEqual(profile.username, "bruce")
+        response = self.client.post("/profile/",                        # Sending a post request to '/profile/'
+        json = data,                                                    # Sending the data for the new  
+        headers = headers_data)                                         # Auth header
+        self.assertEqual(response.status_code, 200)                     # Checking if the response is 200
+        data = response.get_json()                                      # Converting the response to data
+        profile = Profile.query.get(data["account"]["id"])              # Querying the db for the profile
+        self.assertIsNotNone(profile)                                   # Checking the profile exists
+        self.assertEqual(profile.username, "bruce")                     # Checking if the user name is the correct data
 
     def test_profile_update(self):
         response = self.client.post("/auth/login", 
-        headers={'Content-Type': 'application/json'},
         json = {              
             "email": "test5@test.com",
             "password": "123456"
@@ -91,5 +87,5 @@ class TestProfiles(unittest.TestCase):                                  # This i
     def test_profile_show(self):
         response = self.client.get("/profile/1")
         data = response.get_json()
-        self.assertEqual(response.status_code, 200)    
+        self.assertEqual(response.status_code, 200)   
         self.assertEqual(data['account']['email'], "test1@test.com")
