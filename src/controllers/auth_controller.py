@@ -27,7 +27,7 @@ def auth_register():
     return jsonify(account_schema.dump(account))                             # Return the account that was just created
 
 
-@auth.route("/login", methods=["POST"])
+@auth.route("/login", methods=["POST"])                                                             # Login route
 def auth_login():
     account_fields = account_schema.load(request.json)                                              # Getting the fields from the Account Schema
     account = Account.query.filter_by(email=account_fields["email"]).first()                        # Query the account table with the email and return the first account

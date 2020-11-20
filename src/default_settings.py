@@ -7,7 +7,7 @@ class Config(object):
 
     @property
     def SQLALCHEMY_DATABASE_URI(self):                              # This is a function that will be used for all envs
-        value = os.environ.get("DB_URI")                       # Retrieve the DB_URI from the .env file to connect to DB
+        value = os.environ.get("DB_URI")                            # Retrieve the DB_URI from the .env file to connect to DB
         if not value:
             raise ValueError("SQLALCHEMY_DATABASE_URI is not set")  # Raise error if it is not set
         return value    

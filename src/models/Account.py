@@ -1,6 +1,6 @@
 from main import db                                                                   # This is the db instance created by SQLAlchemy
-from models.Profile import Profile
-from sqlalchemy.orm import backref                                                    # 
+from models.Profile import Profile                                                    # Importing the Profile model
+from sqlalchemy.orm import backref                                                    # Used to make references to other tables
 
 class Account(db.Model):                                                              # Creating a Accounts class inheriting from db.Model
     __tablename__= "accounts"                                                         # Explicitly naming the table "accounts"
@@ -10,5 +10,5 @@ class Account(db.Model):                                                        
     password = db.Column(db.String(), nullable=False)                                 # The password is a string and must be present
     profile = db.relationship("Profile", backref=backref("account", uselist=False))   # 
 
-    def __repr__(self):                                                               #
+    def __repr__(self):                                                               # When printing the model we will see its email attribute
         return f"<Account {self.email}>"
