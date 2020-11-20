@@ -11,7 +11,7 @@ class TestProfiles(unittest.TestCase):                                  # This i
         cls.client = cls.app.test_client()                              # Adding the test client to the client
         db.create_all()                                                 # Create all the 
         runner = cls.app.test_cli_runner()
-        runner.invoke(args=["db-custom", "seed"])                              # This seeds the db
+        runner.invoke(args=["db-custom", "seed"])                       # This seeds the db
 
     @classmethod                                                        # This method will run after each and every class
     def tearDown(cls):                                                  # We want to delete all the data from the class tests
@@ -21,34 +21,29 @@ class TestProfiles(unittest.TestCase):                                  # This i
 
 
     def test_auth_register(self):
-        response = self.client.post("/auth/register", 
-        headers={'Content-Type': 'application/json'},
-        json = {              
+        response = self.client.post("/auth/register",                   # Sending a post request to /auth/register
+        json = {                                                        # Data needed to register a new user
             "email": "test6@test.com",
             "password": "123456"
         })
-        data = response.get_json()                                        # jsonify the data
-        self.assertEqual(response.status_code, 200) 
+        self.assertEqual(response.status_code, 200)                     # Make sure the status codefrom the response is 200
+        data = response.get_json()                                      # Convert the data to JSON
 
-        response = self.client.post("/auth/login", 
-        headers={'Content-Type': 'application/json'},
-        json = {              
+        response = self.client.post("/auth/login",                      # Sending a post request to /auth/login
+        json = {                                                        # The json data needed to login ( From the new user )
             "email": "test6@test.com",
             "password": "123456"
         })                    
-        data = response.get_json()                                        # jsonify the data
-        self.assertEqual(response.status_code, 200)                       # Checking if the response code is 200 you can make it a range 200-299 too
-        # self.assertIsInstance(data, list)                               # Checking the data type of the response code
+        data = response.get_json()                                      # jsonify the data
+        self.assertEqual(response.status_code, 200)                     # Checking if the response code is 200 you can make it a range 200-299 too
 
 
     def test_auth_login(self):
-        response = self.client.post("/auth/login", 
-        headers={'Content-Type': 'application/json'},
-        json = {              
+        response = self.client.post("/auth/login",                       # Sending a post request to /auth/login
+        json = {                                                         # The json data needed to login
             "email": "test1@test.com",
             "password": "123456"
         })
-        data = response.get_json()                                        # jsonify the data
-        # print(type(data['token']), "<-------- **********")
+        data = response.get_json()                                        # Convert the response to data
         self.assertEqual(response.status_code, 200)                       # Checking if the response code is 200 you can make it a range 200-299 too
-        self.assertIsInstance(data['token'], str)                                 # Checking the data type of the response code
+        self.assertIsInstance(data['token'], str)                         # Checking the data data type of the token

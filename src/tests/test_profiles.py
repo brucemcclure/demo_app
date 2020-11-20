@@ -16,7 +16,7 @@ class TestProfiles(unittest.TestCase):                                  # This i
         cls.client = cls.app.test_client()                              # Adding the test client to the client
         db.create_all()                                                 # Create all the 
         runner = cls.app.test_cli_runner()
-        runner.invoke(args=["db-custom", "seed"])                              # This seeds the db
+        runner.invoke(args=["db-custom", "seed"])                       # This seeds the db
 
     @classmethod                                                        # This method will run after each and every class
     def tearDown(cls):                                                  # We want to delete all the data from the class tests
