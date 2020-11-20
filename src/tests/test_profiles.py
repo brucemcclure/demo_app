@@ -16,7 +16,7 @@ class TestProfiles(unittest.TestCase):                                  # This i
         cls.client = cls.app.test_client()                              # Adding the test client to the client
         db.create_all()                                                 # Create all the 
         runner = cls.app.test_cli_runner()
-        runner.invoke(args=["db", "seed"])                              # This seeds the db
+        runner.invoke(args=["db-custom", "seed"])                              # This seeds the db
 
     @classmethod                                                        # This method will run after each and every class
     def tearDown(cls):                                                  # We want to delete all the data from the class tests
@@ -30,29 +30,40 @@ class TestProfiles(unittest.TestCase):                                  # This i
         self.assertEqual(response.status_code, 200)                     # Checking if the response code is 200 you can make it a range 200-299 too
         self.assertIsInstance(data, list)                               # Checking the data type of the response code
 
-    # def test_book_create(self):                                         # Testing the Create function for profiles
+    def test_profile_create(self):
 
-    #     check = self.client.post("/auth/login", json= {
-    #         "email": "test1@test.com",
-    #         "password": "123456"
-    #     })
 
-    #     print(check, "<--------- ************")
-
-    #     token = self.client.post("/auth/login", json= {
-    #         "email": "bruce@bruce.com",
-    #         "password": "123456"
-    #     })
+        response = self.client.post("/auth/register", 
+        headers={'Content-Type': 'application/json'},
+        json = {              
+            "email": "test6@test.com",
+            "password": "123456"
+        })
         
-    #     response = self.client.post("/profile/", json= {                # Creating the post request
-    #         "username": "testusername",                                  
-    #         "firstname": "testfirstname",
-    #         "lastname": "testlastname"
-    #     })
+        response = self.client.post("/auth/login", 
+        headers={'Content-Type': 'application/json'},
+        json = {              
+            "email": "test6@test.com",
+            "password": "123456"
+        })                    
+        data = response.get_json()
 
-    #     data = response.get_json()                                      # Accessing the data from the response object
+        headers_data= {
+            'Content-Type': 'application/json',
+            'Authorization': f"Bearer {data['token']}"
+        }
+        data = {
+            "username" : "bruce", 
+            "firstname" : "test", 
+            "lastname" : "test"
+        }
 
-    #     self.assertEqual(response.status_code, 200)                     # Checking if the status code is 200, This can be more broad to check if it is between 200-300
-    #     self.assertTrue(bool("id" in data.keys()))                      # Checking if there is a key of id in the data
-    #     profile = Profile.query.get(data["id"])                         # Checking if the profile was created and in the db
-    #     self.assertIsNotNone(profile)                                   # Checking the profile is not none
+        response = self.client.post("/profile/", json = data, headers = headers_data)
+        self.assertEqual(response.status_code, 200) 
+        data = response.get_json()
+        profile = Profile.query.get(data["account"]["id"])
+        self.assertIsNotNone(profile)
+        self.assertEqual(profile.username, "bruce")
+
+
+
