@@ -15,12 +15,14 @@ def drop_db():
 def seed_db():
     from models.User import User                          # Importing the User model
     from models.Profile import Profile                          # Importing the Profile model
+    from models.League import League
     from main import bcrypt                                     # Hashing module for the passwords
     from faker import Faker                                     # Importing the faker module for fake data
     import random                                               # Importing random from the python standard library
 
     faker = Faker()
     users = []
+    leagues = []
 
     for i in range(5):                                                           # Do this 5 times
         user = User()                                                           # Create an user object from the User model
@@ -48,7 +50,7 @@ def seed_db():
         new_league.title = f"League title {i}"
         new_league.description = f"A nice league to the power of {i}"
         for i in range(3):
-            new_league.account_leagues.append(users[i])
+            new_league.users_leagues.append(users[i])
             leagues.append(new_league)
         db.session.commit() 
 
