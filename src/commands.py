@@ -42,4 +42,22 @@ def seed_db():
         db.session.add(profile)                                                 # Add the profile to the session
 
     db.session.commit()                                                         # Commit the session to the database
+
+    for i in range(3):
+        new_league = League()
+        new_league.title = f"League title {i}"
+        new_league.description = f"A nice league to the power of {i}"
+        for i in range(3):
+            new_league.account_leagues.append(users[i])
+            leagues.append(new_league)
+        db.session.commit() 
+
+    for member in leagues[0].users_leagues:
+        # print(f"League {i.title} => {i.account_id}") 
+        print(member.email)
+
+
+
+
+
     print("Tables seeded")                                                      # Print a message to let the user know they 
