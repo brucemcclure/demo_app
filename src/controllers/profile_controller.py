@@ -56,7 +56,6 @@ def profile_update(user, id):
     if not profile:                                                    # If there is no profile found
         return abort(401, description="Unauthorized to update this profile")  # Return this error
 
-    print(profile.__dict__)
     profile.update(profile_fields)                                     # Update the fields with the data from the request
     db.session.commit()                                                # Commit the session to the db
     return jsonify(profile_schema.dump(profile[0]))                    # Return the recently committed profile
