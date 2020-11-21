@@ -14,3 +14,8 @@ leagues = Blueprint("leagues", __name__, url_prefix="/league")         # Creatin
 def league_index():                                                    # This function will run when the route is matched
     leagues = League.query.all()                                       # Retrieving all profiles from the db
     return jsonify(leagues_schema.dump(leagues))                       # Returning all the profiles in json 
+
+# @leagues.route("/<int:id>", methods=["GET"])                                   # Route for the profile index
+# def league_index():                                                    # This function will run when the route is matched
+#     leagues = League.query.all()                                       # Retrieving all profiles from the db
+#     return jsonify(leagues_schema.dump(leagues))                       # Returning all the profiles in json 
