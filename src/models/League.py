@@ -2,7 +2,7 @@ from main import db
 from models.Category import Category
 from sqlalchemy.orm import backref                       
 
-leagues_categories = db.Table( "leagues_categories"
+leagues_categories = db.Table( "leagues_categories",
     db.Column('league_id', db.Integer, db.ForeignKey('leagues.id')),
     db.Column('category_id', db.Integer, db.ForeignKey('categories.id'))
 
