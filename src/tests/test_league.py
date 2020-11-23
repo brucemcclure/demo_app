@@ -49,26 +49,25 @@ class TestProfiles(unittest.TestCase):                                  # This i
         self.assertIsNotNone(data)     
 
 
-    # def test_league_create(self):
-    #     response = self.client.post("/user/login",                      # Logging in with the new user credentials
-    #     json = {              
-    #         "email": "test1@test.com",
-    #         "password": "123456"
-    #     })                    
-    #     data = response.get_json()                                      # Turning the response to JSON
-    #     headers_data= {                                                 # Creating the dictionary to be sent as an auth header 
-    #         'Authorization': f"Bearer {data['token']}"
-    #     }
-    #     data = {                                                        # Creating a dictionary holding the data for the new profile
-    #         "title" : "This is the new league which was created", 
-    #         "description" : "description, hoomst hoomst", 
-    #         "lastname" : "test"
-    #     }
-    #     response = self.client.post("/leage/",                        # Sending a post request to '/profile/'
-    #     json = data,                                                    # Sending the data for the new  
-    #     headers = headers_data)                                         # Auth header
-    #     self.assertEqual(response.status_code, 200)                     # Checking if the response is 200
-    #     # data = response.get_json()                                      # Converting the response to data
-    #     # profile = Profile.query.get(data["user"]["id"])                 # Querying the db for the profile
-    #     # self.assertIsNotNone(profile)                                   # Checking the profile exists
-    #     # self.assertEqual(profile.username, "bruce")   
+    def test_league_create(self):
+        response = self.client.post("/user/login",                      # Logging in with the new user credentials
+        json = {              
+            "email": "test1@test.com",
+            "password": "123456"
+        })                    
+        data = response.get_json()                                      # Turning the response to JSON
+        headers_data= {                                                 # Creating the dictionary to be sent as an auth header 
+            'Authorization': f"Bearer {data['token']}"
+        }
+        data = {                                                        # Creating a dictionary holding the data for the new profile
+            "title" : "rey", 
+            "description" : "deert", 
+        }
+        response = self.client.post("/league/",                        # Sending a post request to '/profile/'
+        json = data,                                                    # Sending the data for the new  
+        headers = headers_data)                                         # Auth header
+        self.assertEqual(response.status_code, 200)                     # Checking if the response is 200
+        # data = response.get_json()                                      # Converting the response to data
+        # profile = Profile.query.get(data["user"]["id"])                 # Querying the db for the profile
+        # self.assertIsNotNone(profile)                                   # Checking the profile exists
+        # self.assertEqual(profile.username, "bruce")   

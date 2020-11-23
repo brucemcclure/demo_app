@@ -15,9 +15,27 @@ def league_index():                                                    # This fu
     leagues = League.query.all()                                       # Retrieving all profiles from the db
     return jsonify(leagues_schema.dump(leagues))                       # Returning all the profiles in json 
 
-@leagues.route("/<int:id>", methods=["GET"])                         # Route for the profile index
+@leagues.route("/<int:id>", methods=["GET"])                         
 @jwt_required 
 @verify_user    
-def league_show(user, id):                                                  # This function will run when the route is matched
-    leagues = League.query.get(id)                                     # Retrieving all profiles from the db
-    return jsonify(league_schema.dump(leagues))                     # Returning all the profiles in json 
+def league_show(user, id):                                                  
+    leagues = League.query.get(id)                                    
+    return jsonify(league_schema.dump(leagues))                     
+
+
+@leagues.route("/", methods=["POST"])                        
+@jwt_required 
+@verify_user    
+def league_create(user):                                                  
+    league_fields = league_schema.load(request.json)                
+
+    new_league = League()
+    new_league.title = league_fields["title"]
+    new_league.description = league_fields["description"]
+    new_league.owner = user.id
+    user.league.append(new_league)
+
+    db.session.commit()
+
+
+    return jsonify(league_schema.dump(new_league))     
