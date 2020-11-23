@@ -1,6 +1,6 @@
 from main import db 
 
-class Category(db.Model):                                                 # Creating a League class inheriting from db.Model            
+class Category(db.Model):                                                 
     __tablename__= "categories"    
 
     id = db.Column(db.Integer, primary_key=True)  
