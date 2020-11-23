@@ -16,6 +16,7 @@ def seed_db():
     from models.User import User                          # Importing the User model
     from models.Profile import Profile                          # Importing the Profile model
     from models.League import League
+    from models.Category import Category
     from main import bcrypt                                     # Hashing module for the passwords
     from faker import Faker                                     # Importing the faker module for fake data
     import random                                               # Importing random from the python standard library
@@ -23,6 +24,7 @@ def seed_db():
     faker = Faker()
     users = []
     leagues = []
+    categories = []
 
     for i in range(5):                                                           # Do this 5 times
         user = User()                                                           # Create an user object from the User model
@@ -55,12 +57,24 @@ def seed_db():
             leagues.append(new_league)
         db.session.commit() 
 
-    for member in leagues[0].users_leagues:
-        # print(f"League {i.title} => {i.account_id}") 
-        print(member.email)
+    # for member in leagues[0].users_leagues:
+    #     # print(f"League {i.title} => {i.account_id}") 
+    #     print(member.email)
 
-
-
+    
+    for i in range(5):
+        new_category = Category()
+        new_category.title = f"category title {i}"
+        new_category.description = f"category title {i}"
+        if i % 2 == 0:
+            private = True
+        else:
+            private = False
+        new_category.private = private
+        new_category.owner = users[i].id
+        new_category.leagues_categories.append(leagues[i])
+        categories.append(new_category)
+        db.session.commit() 
 
 
     print("Tables seeded")                                                      # Print a message to let the user know they 

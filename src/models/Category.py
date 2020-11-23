@@ -8,3 +8,6 @@ class Category(db.Model):
     description = db.Column(db.String(), nullable=False)  
     private = db.Column(db.Boolean(), nullable=False)
     owner = db.Column(db.Integer, db.ForeignKey("users.id"), nullable=False)
+
+    def __repr__(self):                                                               # When printing the model we will see its email attribute
+        return f"<Category {self.title}>"
