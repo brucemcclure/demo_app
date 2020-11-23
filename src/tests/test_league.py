@@ -50,6 +50,7 @@ class TestProfiles(unittest.TestCase):                                  # This i
 
 
     def test_league_create(self):
+
         response = self.client.post("/user/login",                      # Logging in with the new user credentials
         json = {              
             "email": "test4@test.com",
@@ -72,3 +73,35 @@ class TestProfiles(unittest.TestCase):                                  # This i
         self.assertEqual(league.owner, 4)     
         # self.assertIsNotNone(profile)                                   # Checking the profile exists
         # self.assertEqual(profile.username, "bruce")   
+
+    def test_league_update(self):
+        response = self.client.post("/user/login",                      # Sending a post request to '/profile/'
+        json = {                                                        # Data for login
+            "email": "test5@test.com",
+            "password": "123456"
+        })  
+
+        token = response.get_json()['token']
+
+        response = self.client.post("/league/",                         # Sending a get request to '/profile/1'
+            headers = {                                                 # Building the dictionary for the auth header
+            'Authorization': f"Bearer {token}"
+            }, 
+            json = {
+                "title" : "This is a league being created to be updated", 
+                "description" : "whoop whoop whoop", 
+            }
+        ) 
+        league_id = response.get_json()['id']
+
+        response = self.client.patch(f"/league/{league_id}",
+        headers = {                                                 
+            'Authorization': f"Bearer {token}"
+            }, 
+            json = {
+                "title" : "This has been updated, yep yep yep", 
+                "description" : "whoop whoop whoop", 
+            })
+        data = response.get_json()
+        self.assertEqual(response.status_code, 200) 
+        self.assertEqual(data['title'], 'This has been updated, yep yep yep') 

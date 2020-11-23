@@ -86,5 +86,6 @@ class TestProfiles(unittest.TestCase):                                  # This i
         response = self.client.get("/profile/1")                        # Sending a get request to '/profile/1'
         data = response.get_json()                                      # Converting the response to json  
         self.assertEqual(response.status_code, 200)                     # Checking the status code is 200
+        print(data, "<==========8")
         self.assertEqual(data["id"], 1)                                 # Checking the id of the profile is correct 
 
