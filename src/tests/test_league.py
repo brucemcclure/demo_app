@@ -30,7 +30,7 @@ class TestProfiles(unittest.TestCase):                                  # This i
         self.assertEqual(response.status_code, 200)                     # Checking if the response code is 200 you can make it a range 200-299 too
         self.assertIsInstance(data, list)                               # Checking the data type of the response codedoc 
 
-    def test_profile_show(self):
+    def test_league_show(self):
         response = self.client.post("/user/login",                      # Sending a post request to '/profile/'
         json = {                                                        # Data for login
             "email": "test5@test.com",

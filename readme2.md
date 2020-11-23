@@ -1,6 +1,8 @@
 TODO
 
 Must change the profile view to check JWT
+Profile Delete
+Account Delete
 
 ### Commands to set up the db
 
