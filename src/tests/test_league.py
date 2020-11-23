@@ -30,8 +30,20 @@ class TestProfiles(unittest.TestCase):                                  # This i
         self.assertEqual(response.status_code, 200)                     # Checking if the response code is 200 you can make it a range 200-299 too
         self.assertIsInstance(data, list)                               # Checking the data type of the response codedoc 
 
-    # def test_profile_show(self):
-    #     response = self.client.get("/leage/1")                        # Sending a get request to '/profile/1'
-    #     data = response.get_json()                                      # Converting the response to json  
-    #     self.assertEqual(response.status_code, 200)                     # Checking the status code is 200
-    #     # self.assertEqual(data["id"], 1)                                 # Checking the id of the profile is correct
+    def test_profile_show(self):
+        response = self.client.post("/user/login",                      # Sending a post request to '/profile/'
+        json = {                                                        # Data for login
+            "email": "test5@test.com",
+            "password": "123456"
+        })                    
+
+        data = response.get_json()                                      # converting the response to data
+
+        response = self.client.get("/league/1",                         # Sending a get request to '/profile/1'
+            headers = {                                                 # Building the dictionary for the auth header
+            'Authorization': f"Bearer {data['token']}"
+        }
+        ) 
+        data = response.get_json()                                      # Converting the response to json  
+        self.assertEqual(response.status_code, 200)                     # Checking the status code is 200
+        self.assertIsNotNone(data)     
