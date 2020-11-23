@@ -39,3 +39,18 @@ def league_create(user):
 
 
     return jsonify(league_schema.dump(new_league))     
+
+
+@leagues.route("/<int:id>", methods=["PUT", "PATCH"])                    
+@jwt_required 
+@verify_user    
+def league_update(user, id):                                                  
+    league_fields = league_schema.load(request.json)                
+    league = League.query.filter_by(id=id, owner=user.id) 
+    if not league:                                                    # If there is no profile found
+        return abort(401, description="Unauthorized to update this league")
+
+    league.update(league_fields)
+
+    db.session.commit()
+    return jsonify(league_schema.dump(league[0]))     

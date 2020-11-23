@@ -52,7 +52,7 @@ class TestProfiles(unittest.TestCase):                                  # This i
     def test_league_create(self):
         response = self.client.post("/user/login",                      # Logging in with the new user credentials
         json = {              
-            "email": "test1@test.com",
+            "email": "test4@test.com",
             "password": "123456"
         })                    
         data = response.get_json()                                      # Turning the response to JSON
@@ -68,6 +68,7 @@ class TestProfiles(unittest.TestCase):                                  # This i
         headers = headers_data)                                         # Auth header
         self.assertEqual(response.status_code, 200)                     # Checking if the response is 200
         # data = response.get_json()                                      # Converting the response to data
-        # profile = Profile.query.get(data["user"]["id"])                 # Querying the db for the profile
+        league = League.query.filter_by(owner=4).first()                            # Querying the db for the profile
+        self.assertEqual(league.owner, 4)     
         # self.assertIsNotNone(profile)                                   # Checking the profile exists
         # self.assertEqual(profile.username, "bruce")   
