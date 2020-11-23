@@ -15,6 +15,7 @@ class User(db.Model):                                                           
     email = db.Column(db.String(), nullable=False, unique=True)                       # Email column, string andit must be unique
     password = db.Column(db.String(), nullable=False)                                 # The password is a string and must be present
     profile = db.relationship("Profile", backref=backref("user", uselist=False))      # Creating the relationship to the profile table
+    league = db.relationship("League", backref=backref("user", uselist=False))      # Creating the relationship to the profile table
     users_leagues = db.relationship('League', secondary=users_leagues, backref=db.backref('users_leagues', lazy = 'dynamic'))
 
     def __repr__(self):                                                               # When printing the model we will see its email attribute

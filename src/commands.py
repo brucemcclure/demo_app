@@ -49,6 +49,7 @@ def seed_db():
         new_league = League()
         new_league.title = f"League title {i}"
         new_league.description = f"A nice league to the power of {i}"
+        new_league.owner = users[i].id
         for i in range(3):
             new_league.users_leagues.append(users[i])
             leagues.append(new_league)
