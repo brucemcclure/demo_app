@@ -4,6 +4,7 @@ Must change the profile view to check JWT
 Profile Delete
 Account Delete
 Add validation to the fine amount
+Change has many relationships to plural
 
 ### Commands to set up the db
 
