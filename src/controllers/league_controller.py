@@ -54,3 +54,20 @@ def league_update(user, id):
 
     db.session.commit()
     return jsonify(league_schema.dump(league[0]))     
+
+
+@leagues.route("/<int:id>", methods=["DELETE"])   
+@jwt_required 
+@verify_user    
+def league_delete(user, id):                                  
+    league = League.query.filter_by(id=id, owner=user.id).first() 
+
+    if not league:                                                    
+        return abort(400, description="Unauthorized to update this league")
+        
+    db.session.delete(league)
+    db.session.commit()                                                # Commit the session to the db
+    return jsonify(league_schema.dump(league)) 
+
+
+    
