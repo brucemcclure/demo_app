@@ -105,3 +105,31 @@ class TestProfiles(unittest.TestCase):                                  # This i
         data = response.get_json()
         self.assertEqual(response.status_code, 200) 
         self.assertEqual(data['title'], 'This has been updated, yep yep yep') 
+
+    def test_league_delete(self):
+        response = self.client.post("/user/login",                      # Sending a post request to '/profile/'
+        json = {                                                        # Data for login
+            "email": "test5@test.com",
+            "password": "123456"
+        })  
+
+        token = response.get_json()['token']
+
+        response = self.client.post("/league/",                         # Sending a get request to '/profile/1'
+            headers = {                                                 # Building the dictionary for the auth header
+            'Authorization': f"Bearer {token}"
+            }, 
+            json = {
+                "title" : "This is a league being created to be updated", 
+                "description" : "whoop whoop whoop", 
+            }
+        ) 
+        league_id = response.get_json()['id']
+
+        response = self.client.delete(f"/league/{league_id}",
+        headers = {                                                 
+            'Authorization': f"Bearer {token}"
+            })
+
+        deleted_league = League.query.get(league_id)
+        self.assertIsNone(deleted_league)
