@@ -83,13 +83,14 @@ def seed_db():
         new_fine = Fine()
         new_fine.title = f"Title {i}"
         new_fine.description = f"Description {i}"
-        new_fine.amount = f"Amount {i}"
+        new_fine.amount = i
         if i % 2 == 0:
             style = "Award"
         else:
             style = "Fine"
         new_fine.style = style
-        new_fine.category_id = categories[i].id
+        category = Category.query.get(i)
+        new_fine.category = category
         print(new_fine.__dict__)
         db.session.commit() 
 
