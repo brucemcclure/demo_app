@@ -36,3 +36,17 @@ def category_create(user):
 
     db.session.commit()
     return jsonify(category_schema.dump(new_category))    
+
+
+@categories.route("/<int:id>", methods=["PUT", "PATCH"])                    
+@jwt_required 
+@verify_user    
+def category_update(user, id):                                                  
+    category_fields = category_schema.load(request.json)                
+    category = Category.query.filter_by(id=id, owner=user.id) 
+    if not category:                                                    # If there is no profile found
+        return abort(401, description="Unauthorized to update this category")
+    category.update(category_fields)
+
+    db.session.commit()
+    return jsonify(category_schema.dump(category[0]))     
