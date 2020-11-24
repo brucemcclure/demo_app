@@ -82,9 +82,7 @@ def category_fines(id):
 @categories.route("/<int:id>/fines", methods=["POST"])       
 @jwt_required 
 @verify_user                      
-def category_fines_create(user, id):           
-    print(id, "<---- id")
-    print(user.id, "<----- user.id")         
+def category_fines_create(user, id):                 
     fine_fields = fine_schema.load(request.json)      
     category = Category.query.filter_by(id=id, owner=user.id ).first()                  # Pull out a category that you own
     new_fine = Fine()
@@ -97,4 +95,13 @@ def category_fines_create(user, id):
     db.session.commit()                                                
     return jsonify(fine_schema.dump(new_fine))
 
-    # return "pickles"
+
+@categories.route("/<int:id>/fines", methods=["PATCH", "PUT"])       
+@jwt_required 
+@verify_user                      
+def category_fines_update(user, id):                 
+    fine_fields = fine_schema.load(request.json)      
+    category = Category.query.filter_by(id=id, owner=user.id ).first()                  # Pull out a category that you own
+    print(category.fine, "<=======8")
+    db.session.commit()                                                
+    return jsonify(fine_schema.dump(category))
