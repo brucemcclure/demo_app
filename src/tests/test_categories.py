@@ -32,4 +32,24 @@ class TestCategories(unittest.TestCase):                                  # This
         response = self.client.get("/categories/1")                          
         data = response.get_json()                                      
         self.assertEqual(response.status_code, 200)                    
-        # self.assertIsInstance(data, list)          
+
+    def test_league_create(self):
+
+        response = self.client.post("/user/login",                      
+        json = {              
+            "email": "test1@test.com",
+            "password": "123456"
+        })                    
+        data = response.get_json()                                      
+        headers_data= {                                                 
+            'Authorization': f"Bearer {data['token']}"
+        }
+        data = {
+        "title": "mkkk", 
+        "description": "l", 
+        "private" : False
+        }
+        response = self.client.post("/categories/",                        
+        json = data,                                                    
+        headers = headers_data)  
+        self.assertEqual(response.status_code, 200) 
