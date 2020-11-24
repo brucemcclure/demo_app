@@ -1,6 +1,7 @@
 from models.Category import Category
 from models.Fine import Fine
 from schemas.CategorySchema import category_schema, categories_schema
+from schemas.FineSchema import fine_schema, fines_schema
 from main import db
 from services.auth_service import verify_user
 from sqlalchemy.orm import joinedload 
@@ -71,8 +72,29 @@ def category_delete(user, id):
 
 @categories.route("/<int:id>/fines", methods=["GET"])                         
 def category_fines(id):                     
-    category = Category.query.filter_by(id=id, private=False ).first()
-    print(category.fine," <=====8")
+    category = Category.query.filter_by(id=id, private=False )
+    if not category:
+        return "Nah that shit doesnt work"
+    # print(category.fine," <=====8")
     return jsonify(categories_schema.dump(category[0].fine))
 
 
+@categories.route("/<int:id>/fines", methods=["POST"])       
+@jwt_required 
+@verify_user                      
+def category_fines_create(user, id):           
+    print(id, "<---- id")
+    print(user.id, "<----- user.id")         
+    fine_fields = fine_schema.load(request.json)      
+    category = Category.query.filter_by(id=id, owner=user.id ).first()                  # Pull out a category that you own
+    new_fine = Fine()
+    new_fine.title = fine_fields["title"]
+    new_fine.description = fine_fields["description"]
+    new_fine.amount = fine_fields["amount"]
+    new_fine.style = fine_fields["style"]
+    new_fine.category_id = id
+    category.fine.append(new_fine)
+    db.session.commit()                                                
+    return jsonify(fine_schema.dump(new_fine))
+
+    # return "pickles"
