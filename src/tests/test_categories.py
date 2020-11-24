@@ -33,8 +33,7 @@ class TestCategories(unittest.TestCase):                                  # This
         data = response.get_json()                                      
         self.assertEqual(response.status_code, 200)                    
 
-    def test_league_create(self):
-
+    def test_category_create(self):
         response = self.client.post("/user/login",                      
         json = {              
             "email": "test1@test.com",
@@ -53,3 +52,37 @@ class TestCategories(unittest.TestCase):                                  # This
         json = data,                                                    
         headers = headers_data)  
         self.assertEqual(response.status_code, 200) 
+
+    def test_category_update(self):
+        response = self.client.post("/user/login",                      # Sending a post request to '/profile/'
+        json = {                                                        # Data for login
+            "email": "test1@test.com",
+            "password": "123456"
+        })  
+
+        token = response.get_json()['token']
+
+        response = self.client.post("/categories/",                         # Sending a get request to '/profile/1'
+            headers = {                                                 # Building the dictionary for the auth header
+            'Authorization': f"Bearer {token}"
+            }, 
+            json = {
+                "title" : "This is a league being created to be updated", 
+                "description" : "whoop whoop whoop",
+                "private" : False 
+            }
+        ) 
+        category_id = response.get_json()['id']
+
+        response = self.client.patch(f"/categories/{category_id}",
+        headers = {                                                 
+            'Authorization': f"Bearer {token}"
+            }, 
+            json = {
+                "title" : "This has been updated, yep yep yep", 
+                "description" : "whoop whoop whoop", 
+                "private" : False 
+            })
+        data = response.get_json()
+        self.assertEqual(response.status_code, 200) 
+        self.assertEqual(data['title'], 'This has been updated, yep yep yep') 
