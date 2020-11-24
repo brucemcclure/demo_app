@@ -5,10 +5,12 @@ from controllers.user_controller import user                 # Importing the use
 from controllers.profile_controller import profiles          # Importing the profile blueprint
 from controllers.league_controller import leagues             # Importing the league blueprint
 from controllers.category_controller import categories 
+from controllers.fine_controller import fines
 
 registerable_controllers = [
     user,
     profiles,
     leagues, 
-    categories
+    categories,
+    fines
 ]

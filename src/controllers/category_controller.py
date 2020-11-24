@@ -1,4 +1,5 @@
 from models.Category import Category
+from models.Fine import Fine
 from schemas.CategorySchema import category_schema, categories_schema
 from main import db
 from services.auth_service import verify_user
@@ -64,3 +65,14 @@ def category_delete(user, id):
     db.session.delete(category)
     db.session.commit()                                                # Commit the session to the db
     return jsonify(category_schema.dump(category)) 
+
+
+# Fines controller
+
+@categories.route("/<int:id>/fines", methods=["GET"])                         
+def category_fines(id):                     
+    category = Category.query.filter_by(id=id, private=False ).first()
+    print(category.fine," <=====8")
+    return jsonify(categories_schema.dump(category[0].fine))
+
+
