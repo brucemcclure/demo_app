@@ -19,7 +19,6 @@ class TestProfiles(unittest.TestCase):                                  # This i
         db.drop_all()                                                   # Drop all tables
         cls.app_context.pop()                                           # Remove the context of the app
 
-
     def test_user_register(self):
         response = self.client.post("/user/register",                   # Sending a post request to /user/register
         json = {                                                        # Data needed to register a new user
@@ -36,7 +35,6 @@ class TestProfiles(unittest.TestCase):                                  # This i
         })                    
         data = response.get_json()                                      # jsonify the data
         self.assertEqual(response.status_code, 200)                     # Checking if the response code is 200 you can make it a range 200-299 too
-
 
     def test_user_login(self):
         response = self.client.post("/user/login",                       # Sending a post request to /user/login
