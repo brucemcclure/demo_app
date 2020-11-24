@@ -88,3 +88,22 @@ class TestProfiles(unittest.TestCase):                                  # This i
         self.assertEqual(response.status_code, 200)                     # Checking the status code is 200
         self.assertEqual(data["id"], 1)                                 # Checking the id of the profile is correct 
 
+    # def test_profile_delete(self):
+    #     response = self.client.post("/profile/{id}",                      # Logging in with the new user credentials
+    #     json = {              
+    #         "email": "test4@test.com",
+    #         "password": "123456"
+    #     })                    
+    #     data = response.get_json()                                      # Turning the response to JSON
+    #     headers_data= {                                                 # Creating the dictionary to be sent as an auth header 
+    #         'Authorization': f"Bearer {data['token']}"
+    #     }
+
+    #     response = self.client.delete("/profile/",                        # Sending a post request to '/profile/'                                               # Sending the data for the new  
+    #     headers = headers_data)   
+    #     print(response.__dict__, "****************************")
+
+    #     profile_id = response.get_json()
+
+    #     deleted_profile = Profile.query.get(profile_id)
+    #     self.assertIsNone(deleted_league)        

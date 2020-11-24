@@ -16,6 +16,8 @@ def seed_db():
     from models.User import User                          # Importing the User model
     from models.Profile import Profile                          # Importing the Profile model
     from models.League import League
+    from models.Fine import  Fine
+    from models.Category import Category
     from main import bcrypt                                     # Hashing module for the passwords
     from faker import Faker                                     # Importing the faker module for fake data
     import random                                               # Importing random from the python standard library
@@ -23,6 +25,7 @@ def seed_db():
     faker = Faker()
     users = []
     leagues = []
+    categories = []
 
     for i in range(5):                                                           # Do this 5 times
         user = User()                                                           # Create an user object from the User model
@@ -49,17 +52,45 @@ def seed_db():
         new_league = League()
         new_league.title = f"League title {i}"
         new_league.description = f"A nice league to the power of {i}"
+        new_league.owner = users[i].id
         for i in range(3):
             new_league.users_leagues.append(users[i])
             leagues.append(new_league)
         db.session.commit() 
 
-    for member in leagues[0].users_leagues:
-        # print(f"League {i.title} => {i.account_id}") 
-        print(member.email)
+    # for member in leagues[0].users_leagues:
+    #     # print(f"League {i.title} => {i.account_id}") 
+    #     print(member.email)
+
+    
+    for i in range(5):
+        new_category = Category()
+        new_category.title = f"category title {i}"
+        new_category.description = f"category description {i}"
+        if i % 2 == 0:
+            private = True
+        else:
+            private = False
+        new_category.private = private
+        new_category.owner = random.choice(users).id
+        new_category.leagues_categories.append(leagues[1])
+        
+        categories.append(new_category)
+        db.session.commit() 
+
+    for i in range(5):
+        new_fine = Fine()
+        new_fine.title = f"Title {i}"
+        new_fine.description = f"Description {i}"
+        new_fine.amount = i
+        if i % 2 == 0:
+            style = "Award"
+        else:
+            style = "Fine"
+        new_fine.style = style
+        category = Category.query.get(i)
+        new_fine.category = category
+        db.session.commit() 
 
 
-
-
-
-    print("Tables seeded")                                                      # Print a message to let the user know they 
+    print("Tables seeded")                                                      

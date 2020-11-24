@@ -9,6 +9,7 @@ class LeagueSchema(ma.SQLAlchemyAutoSchema):                          # Generate
 
     title = ma.String(required=True, validate=Length(min=1))          # username is required and the minimum length is 1
     description = ma.String(required=True, validate=Length(min=1))    # first_name is required and the minimum length is 1
-
+    user = ma.Nested(UserSchema) 
+    
 league_schema = LeagueSchema()                                        # Schema for a single league
 leagues_schema = LeagueSchema(many=True)                              # Schema for multiple leagues    

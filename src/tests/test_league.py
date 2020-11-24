@@ -30,8 +30,106 @@ class TestProfiles(unittest.TestCase):                                  # This i
         self.assertEqual(response.status_code, 200)                     # Checking if the response code is 200 you can make it a range 200-299 too
         self.assertIsInstance(data, list)                               # Checking the data type of the response codedoc 
 
-    # def test_profile_show(self):
-    #     response = self.client.get("/leage/1")                        # Sending a get request to '/profile/1'
-    #     data = response.get_json()                                      # Converting the response to json  
-    #     self.assertEqual(response.status_code, 200)                     # Checking the status code is 200
-    #     # self.assertEqual(data["id"], 1)                                 # Checking the id of the profile is correct
+    def test_league_show(self):
+        response = self.client.post("/user/login",                      # Sending a post request to '/profile/'
+        json = {                                                        # Data for login
+            "email": "test5@test.com",
+            "password": "123456"
+        })                    
+
+        data = response.get_json()                                      # converting the response to data
+
+        response = self.client.get("/league/1",                         # Sending a get request to '/profile/1'
+            headers = {                                                 # Building the dictionary for the auth header
+            'Authorization': f"Bearer {data['token']}"
+        }
+        ) 
+        data = response.get_json()                                      # Converting the response to json  
+        self.assertEqual(response.status_code, 200)                     # Checking the status code is 200
+        self.assertIsNotNone(data)     
+
+
+    def test_league_create(self):
+
+        response = self.client.post("/user/login",                      # Logging in with the new user credentials
+        json = {              
+            "email": "test4@test.com",
+            "password": "123456"
+        })                    
+        data = response.get_json()                                      # Turning the response to JSON
+        headers_data= {                                                 # Creating the dictionary to be sent as an auth header 
+            'Authorization': f"Bearer {data['token']}"
+        }
+        data = {                                                        # Creating a dictionary holding the data for the new profile
+            "title" : "rey", 
+            "description" : "deert", 
+        }
+        response = self.client.post("/league/",                        # Sending a post request to '/profile/'
+        json = data,                                                    # Sending the data for the new  
+        headers = headers_data)                                         # Auth header
+        self.assertEqual(response.status_code, 200)                     # Checking if the response is 200
+        # data = response.get_json()                                      # Converting the response to data
+        league = League.query.filter_by(owner=4).first()                            # Querying the db for the profile
+        self.assertEqual(league.owner, 4)     
+        # self.assertIsNotNone(profile)                                   # Checking the profile exists
+        # self.assertEqual(profile.username, "bruce")   
+
+    def test_league_update(self):
+        response = self.client.post("/user/login",                      # Sending a post request to '/profile/'
+        json = {                                                        # Data for login
+            "email": "test5@test.com",
+            "password": "123456"
+        })  
+
+        token = response.get_json()['token']
+
+        response = self.client.post("/league/",                         # Sending a get request to '/profile/1'
+            headers = {                                                 # Building the dictionary for the auth header
+            'Authorization': f"Bearer {token}"
+            }, 
+            json = {
+                "title" : "This is a league being created to be updated", 
+                "description" : "whoop whoop whoop", 
+            }
+        ) 
+        league_id = response.get_json()['id']
+
+        response = self.client.patch(f"/league/{league_id}",
+        headers = {                                                 
+            'Authorization': f"Bearer {token}"
+            }, 
+            json = {
+                "title" : "This has been updated, yep yep yep", 
+                "description" : "whoop whoop whoop", 
+            })
+        data = response.get_json()
+        self.assertEqual(response.status_code, 200) 
+        self.assertEqual(data['title'], 'This has been updated, yep yep yep') 
+
+    def test_league_delete(self):
+        response = self.client.post("/user/login",                      # Sending a post request to '/profile/'
+        json = {                                                        # Data for login
+            "email": "test5@test.com",
+            "password": "123456"
+        })  
+
+        token = response.get_json()['token']
+
+        response = self.client.post("/league/",                         # Sending a get request to '/profile/1'
+            headers = {                                                 # Building the dictionary for the auth header
+            'Authorization': f"Bearer {token}"
+            }, 
+            json = {
+                "title" : "This is a league being created to be updated", 
+                "description" : "whoop whoop whoop", 
+            }
+        ) 
+        league_id = response.get_json()['id']
+
+        response = self.client.delete(f"/league/{league_id}",
+        headers = {                                                 
+            'Authorization': f"Bearer {token}"
+            })
+
+        deleted_league = League.query.get(league_id)
+        self.assertIsNone(deleted_league)
