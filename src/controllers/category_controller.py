@@ -21,3 +21,18 @@ def category_show(id):
     return jsonify(categories_schema.dump(category))    
 
 
+@categories.route("/", methods=["POST"])                        
+@jwt_required 
+@verify_user    
+def category_create(user):                                                  
+    category_fields = category_schema.load(request.json)                
+    new_category = Category()
+    new_category.title = category_fields["title"]
+    new_category.description = category_fields["description"]
+    new_category.private = category_fields["private"]
+    new_category.owner = user.id    
+     
+    user.category.append(new_category)
+
+    db.session.commit()
+    return jsonify(category_schema.dump(new_category))    
