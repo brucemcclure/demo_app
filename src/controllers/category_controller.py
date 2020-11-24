@@ -12,3 +12,12 @@ categories = Blueprint("categories", __name__, url_prefix="/categories")
 def category_index():                                                           
     categories = Category.query.filter_by(private=False)                      
     return jsonify(categories_schema.dump(categories))        
+
+
+
+@categories.route("/<int:id>", methods=["GET"])                         
+def category_show(id):                                          
+    category = Category.query.filter_by(id=id, private=False )  
+    return jsonify(categories_schema.dump(category))    
+
+
