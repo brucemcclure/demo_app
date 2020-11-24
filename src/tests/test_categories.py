@@ -1,6 +1,6 @@
 import unittest                                                            # This is the inbuilt python testing module
 from main import create_app, db                                            # This is the create_app function from the factory pattern and the DB from main
-from models.Category import Category                                       # The League module that is used to communicate data with the DB
+from models.Category import Category                                       
 from models.User import User                                               # The User module to be used to log in to retrieve a JWT
 
 
@@ -67,7 +67,7 @@ class TestCategories(unittest.TestCase):                                  # This
             'Authorization': f"Bearer {token}"
             }, 
             json = {
-                "title" : "This is a league being created to be updated", 
+                "title" : "This is a category being created to be updated", 
                 "description" : "whoop whoop whoop",
                 "private" : False 
             }
@@ -86,3 +86,34 @@ class TestCategories(unittest.TestCase):                                  # This
         data = response.get_json()
         self.assertEqual(response.status_code, 200) 
         self.assertEqual(data['title'], 'This has been updated, yep yep yep') 
+
+
+
+    def test_category_delete(self):
+        response = self.client.post("/user/login",                      # Sending a post request to '/profile/'
+        json = {                                                        # Data for login
+            "email": "test5@test.com",
+            "password": "123456"
+        })  
+
+        token = response.get_json()['token']
+
+        response = self.client.post("/categories/",                         # Sending a get request to '/profile/1'
+            headers = {                                                 # Building the dictionary for the auth header
+            'Authorization': f"Bearer {token}"
+            }, 
+            json = {
+                "title" : "This is a category being created to be deleted", 
+                "description" : "whoop whoop whoop",
+                "private" : False 
+            }
+        ) 
+        category_id = response.get_json()['id']
+
+        response = self.client.delete(f"/categories/{category_id}",
+        headers = {                                                 
+            'Authorization': f"Bearer {token}"
+            })
+
+        deleted_category = Category.query.get(category_id)
+        self.assertIsNone(deleted_category)
