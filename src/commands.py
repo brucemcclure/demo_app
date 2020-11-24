@@ -72,12 +72,11 @@ def seed_db():
         else:
             private = False
         new_category.private = private
-        new_category.owner = users[i].id
+        new_category.owner = random.choice(users).id
         new_category.leagues_categories.append(leagues[1])
-
+        
         categories.append(new_category)
-        print(new_category.__dict__)
-    db.session.commit() 
+        db.session.commit() 
 
     for i in range(5):
         new_fine = Fine()
@@ -91,7 +90,6 @@ def seed_db():
         new_fine.style = style
         category = Category.query.get(i)
         new_fine.category = category
-        print(new_fine.__dict__)
         db.session.commit() 
 
 
