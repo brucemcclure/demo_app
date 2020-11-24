@@ -50,3 +50,17 @@ def category_update(user, id):
 
     db.session.commit()
     return jsonify(category_schema.dump(category[0]))     
+
+
+@categories.route("/<int:id>", methods=["DELETE"])   
+@jwt_required 
+@verify_user    
+def category_delete(user, id):                                  
+    category = Category.query.filter_by(id=id, owner=user.id).first() 
+
+    if not category:                                                    
+        return abort(400, description="Unauthorized to update this category")
+        
+    db.session.delete(category)
+    db.session.commit()                                                # Commit the session to the db
+    return jsonify(category_schema.dump(category)) 
