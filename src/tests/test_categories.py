@@ -27,3 +27,9 @@ class TestCategories(unittest.TestCase):                                  # This
         data = response.get_json()                                      
         self.assertEqual(response.status_code, 200)                    
         self.assertIsInstance(data, list)                
+
+    def test_category_show(self):
+        response = self.client.get("/categories/1")                          
+        data = response.get_json()                                      
+        self.assertEqual(response.status_code, 200)                    
+        # self.assertIsInstance(data, list)          
