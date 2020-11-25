@@ -18,6 +18,7 @@ def seed_db():
     from models.Profile import Profile                          # Importing the Profile model
     from models.League import League
     from models.Fine import  Fine
+    from models.Point import Point
     from models.Category import Category
     from models.Sprint import Sprint
     from main import bcrypt                                     # Hashing module for the passwords
@@ -29,6 +30,7 @@ def seed_db():
     leagues = []
     categories = []
     sprints = []
+    points = []
 
     for i in range(5):                                                           # Do this 5 times
         user = User()                                                           # Create an user object from the User model
@@ -51,7 +53,7 @@ def seed_db():
 
     db.session.commit()                                                         # Commit the session to the database
 
-    for i in range(3):
+    for i in range(5):
         new_league = League()
         new_league.title = f"League title {i}"
         new_league.description = f"A nice league to the power of {i}"
@@ -61,7 +63,7 @@ def seed_db():
             leagues.append(new_league)
         db.session.commit() 
 
-    for i in range(3):
+    for i in range(5):
         new_sprint = Sprint()
         new_sprint.title = f"Sprint title #{i}"
         new_sprint.meeting_point = f"The Outback"
@@ -101,5 +103,11 @@ def seed_db():
         new_fine.category = category
         db.session.commit() 
 
+    for i in range(5):
+        new_point = Point()
+        new_point.creation_time = date.today()
+        sprint = Sprint.query.get(i)
+        new_point.sprint = sprint
+        db.session.commit() 
 
     print("Tables seeded")                                                      
