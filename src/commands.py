@@ -31,6 +31,7 @@ def seed_db():
     categories = []
     sprints = []
     points = []
+    fines = []
 
     for i in range(5):                                                           # Do this 5 times
         user = User()                                                           # Create an user object from the User model
@@ -101,11 +102,14 @@ def seed_db():
         new_fine.style = style
         category = Category.query.get(i)
         new_fine.category = category
+        fines.append(new_fine)
         db.session.commit() 
 
     for i in range(5):
         new_point = Point()
         new_point.creation_time = date.today()
+        new_point.fine_id = random.choice(fines).id
+        print(new_point.fine_id, "<=========8")
         sprint = Sprint.query.get(i)
         new_point.sprint = sprint
         db.session.commit() 
