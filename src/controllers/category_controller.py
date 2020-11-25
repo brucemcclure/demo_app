@@ -96,12 +96,15 @@ def category_fines_create(user, id):
     return jsonify(fine_schema.dump(new_fine))
 
 
-@categories.route("/<int:id>/fines", methods=["PATCH", "PUT"])       
+@categories.route("/<int:cat_id>/fines/<int:fine_id>", methods=["PATCH", "PUT"])       
 @jwt_required 
 @verify_user                      
-def category_fines_update(user, id):                 
+def category_fines_update(user, cat_id, fine_id):                 
     fine_fields = fine_schema.load(request.json)      
-    category = Category.query.filter_by(id=id, owner=user.id ).first()                  # Pull out a category that you own
-    print(category.fine, "<=======8")
+
+    fine = Fine.query.filter_by(id=fine_id,  category_id=cat_id  )
+    fine.update(fine_fields)
+
     db.session.commit()                                                
-    return jsonify(fine_schema.dump(category))
+    return jsonify(fines_schema.dump(fine))
+ 
