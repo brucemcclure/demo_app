@@ -110,11 +110,29 @@ def category_fines_update(user, cat_id, fine_id):
     fine_fields = fine_schema.load(request.json)      
 
     fine = Fine.query.filter_by(id=fine_id,  category_id=cat_id  )
+    if not fine:                                                    
+        return abort(404, description="This fone does not exist")
+
     fine.update(fine_fields)
 
     db.session.commit()                                                
     return jsonify(fines_schema.dump(fine))
- 
 
+# @categories.route("/<int:cat_id>/fines/<int:fine_id>", methods=["DELETE"])       
+# @jwt_required 
+# @verify_user                      
+# def category_fines_update(user, cat_id, fine_id):
+#     owned_cats = []
+#     for i in user.category:
+#         owned_cats.append(i.id)
+    
+#     if cat_id not in owned_cats:
+#         abort(401, description="Unauthorized to delete fines in this category")    
+                 
+#     fine_fields = fine_schema.load(request.json)      
 
+#     fine = Fine.query.filter_by(id=fine_id,  category_id=cat_id  )
+#     db.session.delete(fine)
 
+#     db.session.commit()                                                
+#     return jsonify(fines_schema.dump(fine))
