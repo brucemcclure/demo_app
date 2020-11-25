@@ -99,7 +99,14 @@ def category_fines_create(user, id):
 @categories.route("/<int:cat_id>/fines/<int:fine_id>", methods=["PATCH", "PUT"])       
 @jwt_required 
 @verify_user                      
-def category_fines_update(user, cat_id, fine_id):                 
+def category_fines_update(user, cat_id, fine_id):
+    owned_cats = []
+    for i in user.category:
+        owned_cats.append(i.id)
+    
+    if cat_id not in owned_cats:
+        abort(401, description="Unauthorized to update fines in this category")    
+
     fine_fields = fine_schema.load(request.json)      
 
     fine = Fine.query.filter_by(id=fine_id,  category_id=cat_id  )
@@ -108,3 +115,6 @@ def category_fines_update(user, cat_id, fine_id):
     db.session.commit()                                                
     return jsonify(fines_schema.dump(fine))
  
+
+
+
