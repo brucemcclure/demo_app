@@ -114,4 +114,4 @@ def seed_db():
         new_point.sprint = sprint
         db.session.commit() 
 
-    print("Tables seeded")                                                      
+    print("Tables seeded")
