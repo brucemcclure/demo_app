@@ -10,4 +10,4 @@ class Sprint(db.Model):                                                         
     league_id = db.Column(db.Integer, db.ForeignKey("leagues.id"), nullable=False)
 
     def __repr__(self):                                                               # When printing the model we will see its email attribute
-        return f"<Fine {self.creation_time}>"
+        return f"<Sprint {self.creation_time}>"

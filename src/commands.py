@@ -13,11 +13,13 @@ def drop_db():
 
 @db_commands.cli.command("seed")                                # this fronction will run when "flask db-custom seed" is run"
 def seed_db():
+    from datetime import date
     from models.User import User                          # Importing the User model
     from models.Profile import Profile                          # Importing the Profile model
     from models.League import League
     from models.Fine import  Fine
     from models.Category import Category
+    from models.Sprint import Sprint
     from main import bcrypt                                     # Hashing module for the passwords
     from faker import Faker                                     # Importing the faker module for fake data
     import random                                               # Importing random from the python standard library
@@ -26,6 +28,7 @@ def seed_db():
     users = []
     leagues = []
     categories = []
+    sprints = []
 
     for i in range(5):                                                           # Do this 5 times
         user = User()                                                           # Create an user object from the User model
@@ -58,9 +61,15 @@ def seed_db():
             leagues.append(new_league)
         db.session.commit() 
 
-    # for member in leagues[0].users_leagues:
-    #     # print(f"League {i.title} => {i.account_id}") 
-    #     print(member.email)
+    for i in range(3):
+        new_sprint = Sprint()
+        new_sprint.title = f"Sprint title #{i}"
+        new_sprint.meeting_point = f"The Outback"
+        new_sprint.creation_time = date.today()
+        league = League.query.get(i)
+        new_sprint.league = league
+        sprints.append(new_sprint)
+    db.session.commit() 
 
     
     for i in range(5):
