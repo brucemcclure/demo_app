@@ -17,6 +17,7 @@ def seed_db():
     from models.User import User                          # Importing the User model
     from models.Profile import Profile                          # Importing the Profile model
     from models.League import League
+    from models.Member import Member
     from models.Fine import  Fine
     from models.Point import Point
     from models.Category import Category
@@ -24,6 +25,7 @@ def seed_db():
     from main import bcrypt                                     # Hashing module for the passwords
     from faker import Faker                                     # Importing the faker module for fake data
     import random                                               # Importing random from the python standard library
+    import copy
 
     faker = Faker()
     users = []
@@ -59,10 +61,38 @@ def seed_db():
         new_league.title = f"League title {i}"
         new_league.description = f"A nice league to the power of {i}"
         new_league.owner = users[i].id
-        for i in range(3):
-            new_league.users_leagues.append(users[i])
-            leagues.append(new_league)
-        db.session.commit() 
+        leagues.append(new_league)
+        db.session.add(new_league) 
+    db.session.commit() 
+
+    # for i in range(5):
+    #     copy_users = copy.deepcopy(users)                           # Make a copy of users each time  
+    #     league = leagues[i]                                         # For each league
+
+    #     for i in range(3):
+    #         new_member = Member()                                   # Create a new member
+    #         random_user = random.choice(copy_users)                 # choose a random user
+    #         copy_users.remove(random_user)                   # Remove it from the list
+    #         new_member.user_id = random_user.id
+    #         new_member.league_id = league.id
+    #         db.session.add(new_member)
+    #         db.session.commit() 
+    #         print("******")
+
+    for i in range(5):
+        owner = Member()
+        owner.user_id = leagues[i].owner
+        owner.league_id = i+1
+        db.session.add(owner)
+
+        new_member = Member()
+        new_member.league_id = i+1
+        new_member.user_id = random.choice(users).id
+        while new_member.user_id == i:
+            new_member.user_id = random.choice(users).id
+        db.session.add(new_member)
+    db.session.commit() 
+
 
     for i in range(5):
         new_sprint = Sprint()
@@ -109,7 +139,6 @@ def seed_db():
         new_point = Point()
         new_point.creation_time = date.today()
         new_point.fine_id = random.choice(fines).id
-        print(new_point.fine_id, "<=========8")
         sprint = Sprint.query.get(i)
         new_point.sprint = sprint
         db.session.commit() 
