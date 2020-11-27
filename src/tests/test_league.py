@@ -133,3 +133,15 @@ class TestProfiles(unittest.TestCase):                                  # This i
 
         deleted_league = League.query.get(league_id)
         self.assertIsNone(deleted_league)
+
+
+    def test_add_members_to_league():
+        response = self.client.post("/user/login",                      # Sending a post request to '/profile/'
+        json = {                                                        # Data for login
+            "email": "test1@test.com",
+            "password": "123456"
+        })  
+
+        token = response.get_json()['token']
+
+        #### Add list of users to league owned by user

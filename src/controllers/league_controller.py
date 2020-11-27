@@ -7,6 +7,7 @@ from services.auth_service import verify_user
 from sqlalchemy.orm import joinedload                                  # 
 from flask_jwt_extended import jwt_required, get_jwt_identity          # Packages for authorization via JWTs
 from flask import Blueprint, request, jsonify, abort                   # Import flask and various sub packages
+from prettyprinter import pprint                                       # TODO remove in Prod
 
 leagues = Blueprint("leagues", __name__, url_prefix="/league")         # Creating the league blueprint 
 
@@ -70,4 +71,14 @@ def league_delete(user, id):
     return jsonify(league_schema.dump(league)) 
 
 
-    
+@leagues.route("/<int:id>/members", methods=["POST"])   
+@jwt_required 
+@verify_user    
+def league_add_members(user, id):   
+    league = League.query.filter_by(id=id, owner=user.id).first() 
+
+    if not league:                                                    
+        return abort(400, description="Unauthorized to add users to this league")
+
+    pprint(request.json)
+    return("psss pss pss")

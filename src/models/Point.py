@@ -8,8 +8,7 @@ class Point(db.Model):
     creation_time = db.Column(db.DateTime, nullable=False)
     sprint_id = db.Column(db.Integer, db.ForeignKey("sprints.id"), nullable=False)
     fine_id = db.Column(db.Integer, db.ForeignKey("fines.id"), nullable=False)
-    # giver = db.relationship("Member", backref=backref("user", uselist=False))
-    # receiver = db.relationship("Member", backref=backref("user", uselist=False))
+
 
     def __repr__(self):                                                               # When printing the model we will see its email attribute
         return f"<Point {self.id}>"

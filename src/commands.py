@@ -65,19 +65,7 @@ def seed_db():
         db.session.add(new_league) 
     db.session.commit() 
 
-    # for i in range(5):
-    #     copy_users = copy.deepcopy(users)                           # Make a copy of users each time  
-    #     league = leagues[i]                                         # For each league
 
-    #     for i in range(3):
-    #         new_member = Member()                                   # Create a new member
-    #         random_user = random.choice(copy_users)                 # choose a random user
-    #         copy_users.remove(random_user)                   # Remove it from the list
-    #         new_member.user_id = random_user.id
-    #         new_member.league_id = league.id
-    #         db.session.add(new_member)
-    #         db.session.commit() 
-    #         print("******")
 
     for i in range(5):
         owner = Member()
