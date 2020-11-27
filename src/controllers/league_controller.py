@@ -82,3 +82,4 @@ def league_add_members(user, id):
 
     pprint(request.json)
     return("psss pss pss")
+    # list(x.keys())
