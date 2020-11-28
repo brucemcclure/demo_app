@@ -16,7 +16,6 @@ def category_index():
     return jsonify(categories_schema.dump(categories))        
 
 
-
 @categories.route("/<int:id>", methods=["GET"])                         
 def category_show(id):                                          
     category = Category.query.filter_by(id=id, private=False )  
@@ -64,73 +63,7 @@ def category_delete(user, id):
         return abort(400, description="Unauthorized to update this category")
         
     db.session.delete(category)
-    db.session.commit()                                                # Commit the session to the db
+    db.session.commit()                                                
     return jsonify(category_schema.dump(category)) 
 
 
-# Fines controller
-
-@categories.route("/<int:id>/fines", methods=["GET"])                         
-def category_fines(id):                     
-    category = Category.query.filter_by(id=id, private=False )
-    if not category:
-        return "Nah that shit doesnt work"
-    # print(category.fine," <=====8")
-    return jsonify(categories_schema.dump(category[0].fine))
-
-
-@categories.route("/<int:id>/fines", methods=["POST"])       
-@jwt_required 
-@verify_user                      
-def category_fines_create(user, id):                 
-    fine_fields = fine_schema.load(request.json)      
-    category = Category.query.filter_by(id=id, owner=user.id ).first()                  # Pull out a category that you own
-    new_fine = Fine()
-    new_fine.title = fine_fields["title"]
-    new_fine.description = fine_fields["description"]
-    new_fine.amount = fine_fields["amount"]
-    new_fine.style = fine_fields["style"]
-    new_fine.category_id = id
-    category.fine.append(new_fine)
-    db.session.commit()                                                
-    return jsonify(fine_schema.dump(new_fine))
-
-
-@categories.route("/<int:cat_id>/fines/<int:fine_id>", methods=["PATCH", "PUT"])       
-@jwt_required 
-@verify_user                      
-def category_fines_update(user, cat_id, fine_id):
-    owned_cats = []
-    for i in user.category:
-        owned_cats.append(i.id)
-    
-    if cat_id not in owned_cats:
-        abort(401, description="Unauthorized to update fines in this category")    
-
-    fine_fields = fine_schema.load(request.json)      
-
-    fine = Fine.query.filter_by(id=fine_id,  category_id=cat_id  )
-    if not fine:                                                    
-        return abort(404, description="This fone does not exist")
-
-    fine.update(fine_fields)
-
-    db.session.commit()                                                
-    return jsonify(fines_schema.dump(fine))
-
-@categories.route("/<int:cat_id>/fines/<int:fine_id>", methods=["DELETE"])       
-@jwt_required 
-@verify_user                      
-def category_fines_delete(user, cat_id, fine_id):
-    # owned_cats = []
-    # for i in user.category:
-    #     owned_cats.append(i.id)
-    
-    # if cat_id not in owned_cats:
-    #     abort(401, description="Unauthorized to delete fines in this category")    
-                 
-    fine = Fine.query.filter_by(id=fine_id,  category_id=cat_id  ).first()
-    db.session.delete(fine)
-
-    db.session.commit()                                                
-    return jsonify(fine_schema.dump(fine))
