@@ -1,6 +1,8 @@
 from models.League import League                                       # Importing the League Model
 from models.User import User                                           # Importing the User Model
+from models.Member import Member
 from schemas.LeagueSchema import league_schema, leagues_schema         # Importing the Profile Schema
+from schemas.MemberSchema import member_schema, members_schema
 from main import db                                                    # This is the db instance created by SQLAlchemy
 from main import bcrypt                                                # Import the hasing package from main
 from services.auth_service import verify_user 
@@ -27,7 +29,7 @@ def league_show(user, id):
 @leagues.route("/", methods=["POST"])                        
 @jwt_required 
 @verify_user    
-def league_create(user):                                                  
+def league_create(user):                                           
     league_fields = league_schema.load(request.json)                
 
     new_league = League()
@@ -71,15 +73,20 @@ def league_delete(user, id):
     return jsonify(league_schema.dump(league)) 
 
 
+
+# NB These need to be addressed
 @leagues.route("/<int:id>/members", methods=["POST"])   
 @jwt_required 
 @verify_user    
 def league_add_members(user, id):   
     league = League.query.filter_by(id=id, owner=user.id).first() 
+    data = request.json
+    for user_id in data["members"]:
+        print(user_id)
+        new_member = Member() 
+        new_member.user_id = user_id
+        new_member.league_id = id
+        db.session.add(new_member) 
+    db.session.commit() 
 
-    if not league:                                                    
-        return abort(400, description="Unauthorized to add users to this league")
-
-    pprint(request.json)
-    return("psss pss pss")
-    # list(x.keys())
+    return(f"The members were successfully added to the league")
