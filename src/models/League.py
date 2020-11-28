@@ -19,7 +19,7 @@ class League(db.Model):                                                 # Creati
     description = db.Column(db.String(), nullable=False)                # Description, string, must be present, must be unique            
     owner = db.Column(db.Integer, db.ForeignKey("users.id"), nullable=False)       # user_id is an integer and the Foreign key comes from the users table id. It is required
     leagues_categories = db.relationship('Category', secondary=leagues_categories, backref=db.backref('leagues_categories', lazy = 'dynamic'))
-    sprints = db.relationship("Sprint", backref=backref("league")) 
+    sprints = db.relationship("Sprint", cascade="all, delete",backref=backref("league")) 
     members = relationship(
         "User", 
         secondary="members"
