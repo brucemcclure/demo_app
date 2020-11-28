@@ -6,11 +6,13 @@ from controllers.profile_controller import profiles          # Importing the pro
 from controllers.league_controller import leagues             # Importing the league blueprint
 from controllers.category_controller import categories 
 from controllers.fine_controller import fines
+from controllers.members_controller import members
 
 registerable_controllers = [
     user,
     profiles,
     leagues, 
     categories,
-    fines
+    fines,
+    members
 ]
