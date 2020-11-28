@@ -26,6 +26,7 @@ def seed_db():
     from faker import Faker                                     # Importing the faker module for fake data
     import random                                               # Importing random from the python standard library
     import copy
+    import time
 
     faker = Faker()
     users = []
@@ -35,28 +36,31 @@ def seed_db():
     points = []
     fines = []
 
-    for i in range(5):                                                           # Do this 5 times
-        user = User()                                                           # Create an user object from the User model
-        user.email = f"test{i+1}@test.com"                                      # Assign an email to the user object
-        user.password = bcrypt.generate_password_hash("123456").decode("utf-8") # Assign ta hashed password to the user object
-        db.session.add(user)                                                    # Add the user to the db session
-        users.append(user)                                                      # Append the user to the users list
+    for i in range(5):     
+        time.sleep(0.2)                                                       
+        user = User()                                                          
+        user.email = f"test{i+1}@test.com"                                      
+        user.password = bcrypt.generate_password_hash("123456").decode("utf-8")
+        db.session.add(user)                                                    
+        users.append(user)                                                      
 
-    db.session.commit()                                                         # Commit the seeion to the db 
-
-    for i in range(5):
-        profile = Profile()                                                     # Create a profile object from the Profile model                 
-
-        profile.username = faker.first_name()                                   # Add a username to the profile object
-        profile.firstname = faker.first_name()                                  # Add a firstname to the profile object
-        profile.lastname = faker.last_name()                                    # Add a lastname to the profile object
-        profile.user_id = users[i].id                                           # Add a user_id to the profile object. This comes from real ids from the users list
-
-        db.session.add(profile)                                                 # Add the profile to the session
-
-    db.session.commit()                                                         # Commit the session to the database
+    db.session.commit()                                                        
 
     for i in range(5):
+        # time.sleep(0.2)  
+        profile = Profile()                                                                    
+
+        profile.username = f"username{i}"                                
+        profile.firstname = f"firstname{i}"                                     
+        profile.lastname = f"lastname{i}"                                     
+        profile.user_id = users[i].id                                           
+
+        db.session.add(profile)                                                 
+
+    db.session.commit()                                                         
+
+    for i in range(5):
+        # time.sleep(0.2)  
         new_league = League()
         new_league.title = f"League title {i}"
         new_league.description = f"A nice league to the power of {i}"
@@ -66,8 +70,8 @@ def seed_db():
     db.session.commit() 
 
 
-
     for i in range(5):
+        # time.sleep(0.2)  
         owner = Member()
         owner.user_id = leagues[i].owner
         owner.league_id = i+1
@@ -76,24 +80,23 @@ def seed_db():
         new_member = Member()
         new_member.league_id = i+1
         new_member.user_id = random.choice(users).id
-        while new_member.user_id == i:
+        while new_member.user_id == owner.user_id:
             new_member.user_id = random.choice(users).id
         db.session.add(new_member)
     db.session.commit() 
-
 
     for i in range(5):
         new_sprint = Sprint()
         new_sprint.title = f"Sprint title #{i}"
         new_sprint.meeting_point = f"The Outback"
         new_sprint.creation_time = date.today()
-        league = League.query.get(i)
+        league = leagues[i]
         new_sprint.league = league
         sprints.append(new_sprint)
     db.session.commit() 
 
-    
     for i in range(5):
+        # time.sleep(0.2)  
         new_category = Category()
         new_category.title = f"category title {i}"
         new_category.description = f"category description {i}"
@@ -107,8 +110,10 @@ def seed_db():
         
         categories.append(new_category)
         db.session.commit() 
-
+    	
+    
     for i in range(5):
+        # time.sleep(0.2)  
         new_fine = Fine()
         new_fine.title = f"Title {i}"
         new_fine.description = f"Description {i}"
@@ -118,17 +123,20 @@ def seed_db():
         else:
             style = "Fine"
         new_fine.style = style
-        category = Category.query.get(i)
+        category = categories[i]
         new_fine.category = category
         fines.append(new_fine)
         db.session.commit() 
 
-    for i in range(5):
+    for i in range(4):
+        # time.sleep(0.2)  
         new_point = Point()
         new_point.creation_time = date.today()
         new_point.fine_id = random.choice(fines).id
-        sprint = Sprint.query.get(i)
+        sprint = sprints[i]
         new_point.sprint = sprint
+        new_point.giver_id = sprint.league.owner
+        new_point.receiver_id = sprint.league.members[1].id
         db.session.commit() 
 
     print("Tables seeded")
