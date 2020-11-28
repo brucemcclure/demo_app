@@ -9,6 +9,11 @@ class Point(db.Model):
     sprint_id = db.Column(db.Integer, db.ForeignKey("sprints.id"), nullable=False)
     fine_id = db.Column(db.Integer, db.ForeignKey("fines.id"), nullable=False)
 
+    giver_id = db.Column(db.Integer, db.ForeignKey("members.id"))
+    receiver_id = db.Column(db.Integer, db.ForeignKey("members.id"))
 
-    def __repr__(self):                                                               # When printing the model we will see its email attribute
+    giver = db.relationship("Member", foreign_keys=[giver_id]) 
+    receiver = db.relationship("Member", foreign_keys=[receiver_id]) 
+
+    def __repr__(self):                                                               
         return f"<Point {self.id}>"
