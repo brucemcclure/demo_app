@@ -37,9 +37,16 @@ def league_create(user):
     new_league.description = league_fields["description"]
     new_league.owner = user.id
     user.league.append(new_league)
+    
 
-    db.session.commit()
-
+    db.session.add(new_league)
+    created_league = League.query.filter_by(owner=user.id)
+    member = Member()
+    member.user_id = user.id
+    member.league_id = created_league[-1].id
+    db.session.add(member)
+    db.session.commit() 
+    # print(created_league[-1], "<==============8")
 
     return jsonify(league_schema.dump(new_league))     
 
