@@ -16,7 +16,6 @@ def category_index():
     return jsonify(categories_schema.dump(categories))        
 
 
-
 @categories.route("/<int:id>", methods=["GET"])                         
 def category_show(id):                                          
     category = Category.query.filter_by(id=id, private=False )  
@@ -64,7 +63,7 @@ def category_delete(user, id):
         return abort(400, description="Unauthorized to update this category")
         
     db.session.delete(category)
-    db.session.commit()                                                # Commit the session to the db
+    db.session.commit()                                                
     return jsonify(category_schema.dump(category)) 
 
 

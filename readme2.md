@@ -1,5 +1,6 @@
 TODO
 
+Fix cascading delete effects
 Must change the profile view to check JWT
 Profile Delete
 Account Delete
