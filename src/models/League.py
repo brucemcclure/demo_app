@@ -1,6 +1,9 @@
 from main import db     
 from models.Category import Category
-from sqlalchemy.orm import backref                       
+from models.Sprint import Sprint
+from sqlalchemy.orm import backref, relationship
+from models.Member import Member
+
 
 leagues_categories = db.Table( "leagues_categories",
     db.Column('league_id', db.Integer, db.ForeignKey('leagues.id')),
@@ -16,6 +19,11 @@ class League(db.Model):                                                 # Creati
     description = db.Column(db.String(), nullable=False)                # Description, string, must be present, must be unique            
     owner = db.Column(db.Integer, db.ForeignKey("users.id"), nullable=False)       # user_id is an integer and the Foreign key comes from the users table id. It is required
     leagues_categories = db.relationship('Category', secondary=leagues_categories, backref=db.backref('leagues_categories', lazy = 'dynamic'))
-    
+    sprints = db.relationship("Sprint", backref=backref("league")) 
+    members = relationship(
+        "User", 
+        secondary="members"
+    )
+
     def __repr__(self):                                                 # Reresentitive state          
         return f"<Title {self.title}>"                                  # When the League is printed it now shows the title instead of the id

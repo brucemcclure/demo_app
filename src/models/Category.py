@@ -13,5 +13,12 @@ class Category(db.Model):
     owner = db.Column(db.Integer, db.ForeignKey("users.id"), nullable=False)
     fine = db.relationship("Fine", backref=backref("category"))   
 
+    # id = db.Column(db.Integer, primary_key=True)  
+    # title = db.Column(db.String(),  unique=True)  
+    # description = db.Column(db.String())  
+    # private = db.Column(db.Boolean())
+    # owner = db.Column(db.Integer, db.ForeignKey("users.id"))
+    # fine = db.relationship("Fine", backref=backref("category"))   
+
     def __repr__(self):                                                               # When printing the model we will see its email attribute
         return f"<Category {self.title}>"

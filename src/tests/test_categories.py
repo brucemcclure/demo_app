@@ -88,7 +88,6 @@ class TestCategories(unittest.TestCase):                                  # This
         self.assertEqual(data['title'], 'This has been updated, yep yep yep') 
 
 
-
     def test_category_delete(self):
         response = self.client.post("/user/login",                      # Sending a post request to '/profile/'
         json = {                                                        # Data for login
