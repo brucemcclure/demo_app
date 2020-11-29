@@ -83,8 +83,11 @@ def league_delete(user, id):
 @leagues.route("/<int:league_id>/categories/<int:cat_id>", methods=["POST"])   
 @jwt_required 
 @verify_user    
-def add_category_to_league(user, league_id, cat_id):                                  
+def add_category_to_league(user, league_id, cat_id):    
     league = League.query.filter_by(id=league_id, owner=user.id).first() 
+    if not league:                                                 
+        return abort(400, description="Unauthorized to add category to this league")
+
     category = Category.query.filter_by(id=cat_id, private=False ).first() 
     league.leagues_categories.append(category)
     db.session.commit()                                               
