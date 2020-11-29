@@ -75,9 +75,11 @@ def seed_db():
         owner = Member()
         owner.user_id = leagues[i].owner
         owner.league_id = i+1
+        owner.active = True
         db.session.add(owner)
 
         new_member = Member()
+        new_member.active = True
         new_member.league_id = i+1
         new_member.user_id = random.choice(users).id
         while new_member.user_id == owner.user_id:
@@ -106,7 +108,7 @@ def seed_db():
             private = False
         new_category.private = private
         new_category.owner = random.choice(users).id
-        new_category.leagues_categories.append(leagues[1])
+        new_category.leagues_categories.append(leagues[i])
         
         categories.append(new_category)
         db.session.commit() 

@@ -11,13 +11,13 @@ leagues_categories = db.Table( "leagues_categories",
 
 )
 
-class League(db.Model):                                                 # Creating a League class inheriting from db.Model            
-    __tablename__= "leagues"                                            # Explicitally providing the name of the table             
+class League(db.Model):                                                 
+    __tablename__= "leagues"                                                   
 
-    id = db.Column(db.Integer, primary_key=True)                        # Creates a column called id and sets it al the primary key             
-    title = db.Column(db.String(), nullable=False, unique=True)         # Title, string, must be present, must be unique              
-    description = db.Column(db.String(), nullable=False)                # Description, string, must be present, must be unique            
-    owner = db.Column(db.Integer, db.ForeignKey("users.id"), nullable=False)       # user_id is an integer and the Foreign key comes from the users table id. It is required
+    id = db.Column(db.Integer, primary_key=True)                                
+    title = db.Column(db.String(), nullable=False, unique=True)                   
+    description = db.Column(db.String(), nullable=False)                          
+    owner = db.Column(db.Integer, db.ForeignKey("users.id"), nullable=False)      
     leagues_categories = db.relationship('Category', secondary=leagues_categories, backref=db.backref('leagues_categories', lazy = 'dynamic'))
     sprints = db.relationship("Sprint", cascade="all, delete",backref=backref("league")) 
     members = relationship(
@@ -25,5 +25,5 @@ class League(db.Model):                                                 # Creati
         secondary="members"
     )
 
-    def __repr__(self):                                                 # Reresentitive state          
-        return f"<Title {self.title}>"                                  # When the League is printed it now shows the title instead of the id
+    def __repr__(self):                                                 
+        return f"<Title {self.title}>"                                 

@@ -1,6 +1,8 @@
 from models.League import League                                       # Importing the League Model
 from models.User import User                                           # Importing the User Model
 from models.Member import Member
+from models.Category import Category
+from schemas.CategorySchema import category_schema
 from schemas.LeagueSchema import league_schema, leagues_schema         # Importing the Profile Schema
 from schemas.MemberSchema import member_schema, members_schema
 from main import db                                                    # This is the db instance created by SQLAlchemy
@@ -43,9 +45,9 @@ def league_create(user):
     member = Member()
     member.user_id = user.id
     member.league_id = created_league[-1].id
+    member.active = True
     db.session.add(member)
     db.session.commit() 
-    # print(created_league[-1], "<==============8")
 
     return jsonify(league_schema.dump(new_league))     
 
@@ -78,5 +80,13 @@ def league_delete(user, id):
     db.session.commit()                                                # Commit the session to the db
     return jsonify(league_schema.dump(league)) 
 
+@leagues.route("/<int:league_id>/categories/<int:cat_id>", methods=["POST"])   
+@jwt_required 
+@verify_user    
+def add_category_to_league(user, league_id, cat_id):                                  
+    league = League.query.filter_by(id=league_id, owner=user.id).first() 
+    category = Category.query.filter_by(id=cat_id, private=False ).first() 
+    league.leagues_categories.append(category)
+    db.session.commit()                                               
 
-
+    return jsonify(leagues_schema.dump(league.leagues_categories)) 
