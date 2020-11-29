@@ -34,7 +34,7 @@ def league_add_members(user, id):
     return(f"The members were successfully added to the league")
 
 
-@members.route("/<int:id>/members", methods=["delete"])   
+@members.route("/<int:id>/members", methods=["DELETE"])   
 @jwt_required 
 @verify_user    
 def league_remove_members(user, id):   
@@ -50,4 +50,15 @@ def league_remove_members(user, id):
         member.active = False
         db.session.commit() 
     return "pickles"
-#     return(f"The members were successfully removed to the league")
+
+@members.route("/<int:league_id>/members", methods=["PATCH", "PUT"])   
+@jwt_required 
+@verify_user    
+def reactivate_member(user, league_id):   
+    member = Member.query.filter_by(user_id=user.id, league_id=league_id).first()
+    if member.active == True:
+        member.active = False
+    else:
+        member.active = True
+    db.session.commit() 
+    return jsonify(member_schema.dump(member))
