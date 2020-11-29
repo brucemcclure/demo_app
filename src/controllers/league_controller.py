@@ -45,9 +45,9 @@ def league_create(user):
     member = Member()
     member.user_id = user.id
     member.league_id = created_league[-1].id
+    member.active = True
     db.session.add(member)
     db.session.commit() 
-    # print(created_league[-1], "<==============8")
 
     return jsonify(league_schema.dump(new_league))     
 

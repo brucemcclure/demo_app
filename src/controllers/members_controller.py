@@ -28,17 +28,17 @@ def league_add_members(user, id):
     return(f"The members were successfully added to the league")
 
 
-# @members.route("/<int:id>/members", methods=["delete"])   
-# @jwt_required 
-# @verify_user    
-# def league_remove_members(user, id):   
-#     league = League.query.filter_by(id=id, owner=user.id).first() 
-#     data = request.json
-#     for user_id in data["members"]:
-#         print(user_id)
+@members.route("/<int:id>/members", methods=["delete"])   
+@jwt_required 
+@verify_user    
+def league_remove_members(user, id):   
+    league = League.query.filter_by(id=id, owner=user.id).first() 
+    data = request.json
+    for user_id in data["members"]:
+        print(user_id)
 #         remove_member = Member.query.get(user_id)
 #         # print(remove_member)
 #         # db.session.delete(remove_member)
 #         # db.session.commit() 
-
+    return "pickles"
 #     return(f"The members were successfully removed to the league")
