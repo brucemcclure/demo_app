@@ -22,6 +22,7 @@ def league_add_members(user, id):
         new_member = Member() 
         new_member.user_id = user_id
         new_member.league_id = id
+        new_member.active = True
         db.session.add(new_member) 
     db.session.commit() 
 
@@ -32,10 +33,11 @@ def league_add_members(user, id):
 @jwt_required 
 @verify_user    
 def league_remove_members(user, id):   
-    league = League.query.filter_by(id=id, owner=user.id).first() 
-    data = request.json
-    for user_id in data["members"]:
-        print(user_id)
+    # check if 
+    # league = League.query.filter_by(id=id, owner=user.id).first() 
+    # data = request.json
+    # for user_id in data["members"]:
+    #     print(user_id)
 #         remove_member = Member.query.get(user_id)
 #         # print(remove_member)
 #         # db.session.delete(remove_member)
