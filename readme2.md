@@ -1,6 +1,7 @@
 TODO
 
 Fix cascading delete effects
+Add better error messages
 Must change the profile view to check JWT
 Profile Delete
 Account Delete

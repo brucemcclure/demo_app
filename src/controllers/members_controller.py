@@ -44,9 +44,9 @@ def league_remove_members(user, id):
 
     data = request.json
     for user_id in data["members"]:
-        member = Member.query.get(user_id)
+        member = Member.query.filter_by(user_id=user_id, league_id=league.id).first() 
         if not member:
-            continue
+            continues
         member.active = False
         db.session.commit() 
     return "pickles"
