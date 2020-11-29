@@ -106,7 +106,7 @@ def seed_db():
             private = False
         new_category.private = private
         new_category.owner = random.choice(users).id
-        new_category.leagues_categories.append(leagues[1])
+        new_category.leagues_categories.append(leagues[i])
         
         categories.append(new_category)
         db.session.commit() 
