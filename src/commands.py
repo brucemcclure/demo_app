@@ -75,9 +75,11 @@ def seed_db():
         owner = Member()
         owner.user_id = leagues[i].owner
         owner.league_id = i+1
+        owner.active = True
         db.session.add(owner)
 
         new_member = Member()
+        new_member.active = True
         new_member.league_id = i+1
         new_member.user_id = random.choice(users).id
         while new_member.user_id == owner.user_id:
