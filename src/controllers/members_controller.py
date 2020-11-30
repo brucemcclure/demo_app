@@ -42,11 +42,14 @@ def league_remove_members(user, id):
     if not league:                                                    
         return abort(401, description="Unauthorized to remove members from this league")
 
+    # if league.owner == user.id:
+    #     return abort(401, description="The owner of the league cannot be deactivated")
+
     data = request.json
     for user_id in data["members"]:
         member = Member.query.filter_by(user_id=user_id, league_id=league.id).first() 
         if not member:
-            continues
+            continue
         member.active = False
         db.session.commit() 
     return "pickles"

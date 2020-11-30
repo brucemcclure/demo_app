@@ -1,10 +1,10 @@
 TODO
 
+Profile Delete
+Account Delete
 Fix cascading delete effects
 Add better error messages
 Must change the profile view to check JWT
-Profile Delete
-Account Delete
 Add validation to the fine amount
 Change has many relationships to plural
 

@@ -80,13 +80,49 @@ def league_delete(user, id):
     db.session.commit()                                                # Commit the session to the db
     return jsonify(league_schema.dump(league)) 
 
-@leagues.route("/<int:league_id>/categories/<int:cat_id>", methods=["POST"])   
+@leagues.route("/<int:league_id>/categories", methods=["POST"])   
 @jwt_required 
 @verify_user    
-def add_category_to_league(user, league_id, cat_id):                                  
+def add_category_to_league(user, league_id):    
     league = League.query.filter_by(id=league_id, owner=user.id).first() 
-    category = Category.query.filter_by(id=cat_id, private=False ).first() 
-    league.leagues_categories.append(category)
+    if not league:                                                 
+        return abort(400, description="Unauthorized to add categories to this league")
+    
+    data = request.json
+    categories_already_in_league = []
+    for cat in league.leagues_categories:
+        categories_already_in_league.append(cat.id)
+
+
+    for cat_id in data["categories"]:
+        category = Category.query.filter_by(id=cat_id, private=False ).first()
+        if category.private == True or (cat_id in categories_already_in_league) or (not category):
+            continue
+        league.leagues_categories.append(category)
+        db.session.commit()                                               
+
+    return jsonify(leagues_schema.dump(league.leagues_categories)) 
+
+
+@leagues.route("/<int:league_id>/categories", methods=["DELETE"])   
+@jwt_required 
+@verify_user    
+def remove_categories_from_league(user, league_id):    
+    league = League.query.filter_by(id=league_id, owner=user.id).first() 
+    if not league:                                                 
+        return abort(400, description="Unauthorized to remove categories to this league")
+    
+    data = request.json
+    categories_already_in_league = []
+    for cat in league.leagues_categories:
+        categories_already_in_league.append(cat.id)
+
+    for cat_id in data["categories"]:
+        category = Category.query.filter_by(id=cat_id, private=False ).first()
+        if category.private == True or (not category):
+            continue
+        elif cat_id in categories_already_in_league:
+            league.leagues_categories.remove(category)
     db.session.commit()                                               
 
     return jsonify(leagues_schema.dump(league.leagues_categories)) 
