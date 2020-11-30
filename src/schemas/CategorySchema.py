@@ -11,7 +11,7 @@ class CategorySchema(ma.SQLAlchemyAutoSchema):
     title = ma.String(required=True, validate=Length(min=1))          
     description = ma.String(required=True, validate=Length(min=1))    
     private = ma.Boolean(required=True)
-    owner = ma.Integer(required=True, validate=Length(min=1))    
+    # owner = ma.Integer(required=True, validate=Length(min=1))    
     
 category_schema = CategorySchema()                                       
 categories_schema = CategorySchema(many=True)     

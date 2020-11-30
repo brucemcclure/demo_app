@@ -93,7 +93,6 @@ def add_category_to_league(user, league_id):
     for cat in league.leagues_categories:
         categories_already_in_league.append(cat.id)
 
-    print(categories_already_in_league, "<-------<<<")
 
     for cat_id in data["categories"]:
         category = Category.query.filter_by(id=cat_id, private=False ).first()
@@ -124,6 +123,6 @@ def remove_categories_from_league(user, league_id):
             continue
         elif cat_id in categories_already_in_league:
             league.leagues_categories.remove(category)
-        db.session.commit()                                               
+    db.session.commit()                                               
 
     return jsonify(leagues_schema.dump(league.leagues_categories)) 
