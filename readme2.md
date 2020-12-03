@@ -8,6 +8,8 @@ Must change the profile view to check JWT
 Add validation to the fine amount
 Change has many relationships to plural
 
+Serverless with dynamo?
+
 ### Commands to set up the db
 
 sudo -i -u postgres
